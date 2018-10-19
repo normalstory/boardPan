@@ -4,12 +4,36 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="board">
 
-	<!-- 사용자 확인 -->
-	<select id="selectUser" resultType="boardPanVo">
-	
-		select * from boardPan
+	<!-- 게시판관리 중 작성자 여부 판단 -->
+	<select id="chackPan" resultType="boardPanVo" parameterType="String">
+		select * from boardPan where PanWriter='panWriter'
 	</select>
 	
+	<!-- 게시판목록 on 메뉴area when 로그인 -->
+	<select id="panListManu" resultType="boardPanVo">
+		select * from boardPan where PanDel='y'
+	</select>
+
+	<!-- 게시판목록 on 게시판 관리page -->
+	<select id="selectUser" resultType="boardPanVo">
+		select * from boardPan
+	</select>
+
+	<!-- 게시판추가 on 게시판 관리page -->
+	<insert id="insertPan" parameterType="boardPanVo">
+		insert into boardPan
+		values ('testA'||PanId.nextval, #{panName}, #{panDel}, #{panWriter}, SYSDATE)
+	</insert>
+	
+	<!-- 게시판수정 on 게시판 관리page -->
+	<update id="updatePan" parameterType="boardPanVo">
+		update set
+		PanName=#{panName}, PanDel=#{panDel}
+		where
+		panWriter=#{panWriter}
+	</update>
 </mapper>
 
 
+
+	

@@ -30,26 +30,16 @@ select {
 .userClick {
 	cursor: pointer;
 }
-</style>  
+</style>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$(".addBoardPan").on("click", function(){
-			var boardManager = $("#addBoardParam").children(".addPan").eq(0).val();
-			$("#pan_Name").val(boardManager);
-			boardManager = $("#addBoardParam").children(".addPan").eq(1).val();
-			$("#pan_Del").val(boardManager);
+		var ec="click"
+		$(".userClick").on(ec, function(){
+			var boardUse = $("#boardUse").children()[1].innerText;
+			var boardPanName = $("#boardPanName").children()[1].innerText;
+			$("#boardUse").val(boardUse);
+			$("#boardPanName").val(boardPanName);
 			$("#frm").submit();
-			//console.log($("#frm").serialize());
-		});
-		 
-		$(".updateBoardParam").on("click",".updateBoardPan", function(){
-			//감싸고있는 상위요소.on("","클릭 대상 요소",펑션)
-			var boardManager = $(this).parent()[0].children[1].value
-			$("#pan_Name").val(boardManager);
-			boardManager = $(this).parent()[0].children[2].value
-			$("#pan_Del").val(boardManager);
-			$("#frm").submit();
-			//console.log($("#frm").serialize());
 		});
 	});	
 </script>
@@ -59,8 +49,8 @@ select {
 	<!-- parameter sender -->
 	<form id="frm" action="/boardManager" method="post">
 		<input type="hidden" name="userId" value="${S_USER.userId}">
-		<input id="pan_Name" type="hidden" name="pan_Name" >
-		<input id="pan_Del" type="hidden" name="pan_Del" >
+		<input type="hidden" name="addPan_Name" id="addPan" value="${addPan_Name }">
+		<input type="hidden" name="addPan_Del" id="addPan" value="${addPan_Del }">
 	</form>
 	
 	<!-- header -->
@@ -79,31 +69,29 @@ select {
 					<hr>
 
 					<h3>게시판 목록</h3>
-					<span>신규 생성하기</span>
-					<ul> 
-						<li id="addBoardParam" >
-							<label>게시판 이름 :</label> 
-							<input class="addPan" type="text" name="addPan_Name" placeholder="생성할 게시판 이름 기재~" /> 
-							<select class="addPan" name="addPan_Del" >
+					<p>신규 생성하기</p>
+					<ul>
+						<li>게시판 이름 : 
+							<input type="text" id="addPan_Name" name="addPan_Name" placeholder="생성할 게시판 이름 기재~" /> 
+							<select id="addPan_Del" name="addPan_Del" >
 									<option value="y">사용</option>
 									<option value="x">안사용</option>
 							</select> 
-							<button type="button" class="addBoardPan">등록</button>
+							<button class="userClick">등록</button>
 						</li>
 					</ul>
-					<span>운영 게시판 목록</span>
+					<p>운영 게시판 목록</p>
 					<ul>
 						<c:forEach items="${boardList }" var="board">
-							<li class="updateBoardParam" >
-								<label>게시판 이름 :</label> 
-								<input type="text" name="boardPanName" value="${board.panName }" /> 
-								<select name="boardUse">
+							<li>게시판 이름 : 
+								<input type="text" id="boardPanName" name="boardPanName" value="${board.panName }" /> 
+								<select id="boardUse" name="boardUse">
 										<option value="y"
 											<c:if test="${board.panDel=='y'}">selected</c:if>>사용</option>
 										<option value="n"
 											<c:if test="${board.panDel=='n'}">selected</c:if>>안사용</option>
 								</select>
-								<button type="button" class="updateBoardPan">등록</button>
+								<button class="userClick" >등록</button>
 							</li>
 						</c:forEach>
 					</ul>

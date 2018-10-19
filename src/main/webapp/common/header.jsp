@@ -16,7 +16,7 @@
 					class="icon-bar"></span>
 			</button>
 			<%-- a class="navbar-brand" href="#">JSP/SPRING	<%--= hello --%><%-- ${userVo.name}님 안녕하세요</a> --%>
-			<a class="navbar-brand" href="#">JSP : BoardPan  
+			<a class="navbar-brand" href="/main.jsp">JSP : BoardPan  
 			<c:if test="${S_USER.name!=null}"> | ${S_USER.name}님 방가방가 </c:if></a> 
 			
 		</div>

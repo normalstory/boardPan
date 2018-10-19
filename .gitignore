@@ -1,8 +1,12 @@
 
 # Created by https://www.gitignore.io/api/maven,macos,windows,eclipse
 
-### Eclipse ###
 
+### Database 분리(Home mac) ###
+src/main/resources/kr/or/ddit/db/db.properties
+
+
+### Eclipse ###
 .metadata
 bin/
 tmp/
