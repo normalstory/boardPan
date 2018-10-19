@@ -31,25 +31,27 @@ public class BoardManager extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Here is Servlet on BoardManager by doPost");
+		request.setCharacterEncoding("UTF-8");
 		
 		BoardServiceInf boardService = new BoardService();
+		
+		String pan_Case = request.getParameter("pan_Case");
 		String pan_Name = request.getParameter("pan_Name");
 		String userId = request.getParameter("userId");
 		String pan_Del = request.getParameter("pan_Del");
-		
-		System.out.println("addPan_Name : "+ pan_Name);
-		System.out.println("panWriter : " + userId);
-		System.out.println("addPan_Del : " + pan_Del);
-		
-		BoardPanVo panVo = null;
-		
-		panVo = boardService.chackPan(userId);
-		System.out.println("panVo : "+panVo);
+		String panId = request.getParameter("panId");
+
+		System.out.println("Pan_Del : " + pan_Case);
+		System.out.println("Pan_Name : "+ pan_Name);
+		System.out.println("login userId : " + userId);
+		System.out.println("Pan_Del : " + pan_Del);
+		System.out.println("panId : " + panId);
 		
 		
-		if(panVo==null){
-			System.out.println("서비스 추가 ");
-			panVo = new BoardPanVo();
+		if(pan_Case.equals("add")){
+			System.out.println("게시판 추가 ");
+			BoardPanVo panVo = new BoardPanVo();
+			
 			panVo.setPanName(request.getParameter("pan_Name"));
 			panVo.setPanWriter(request.getParameter("userId"));
 			panVo.setPanDel(request.getParameter("pan_Del"));
@@ -58,24 +60,27 @@ public class BoardManager extends HttpServlet {
 			int insertPanResult = boardService.insertPan(panVo);
 			System.out.println(" 게시판관리 > panVo 추가: 성공1,실패0 : "+ insertPanResult);	
 			
-			request.setAttribute("panVo", panVo);
-		}else{
-			System.out.println("서비스 수정 ");
-			panVo.setPanName(request.getParameter("pan_Name"));
-			panVo.setPanWriter(request.getParameter("userId"));
-			panVo.setPanDel(request.getParameter("pan_Del"));
+			request.getServletContext().setAttribute("panVo", panVo);
+		}
+		
+		if(pan_Case.equals("update")){
+			System.out.println("게시판 수정 ");
+			BoardPanVo panVo = boardService.chackPan(panId);
 			System.out.println("upadate panVo : "+ panVo);
+			
+			panVo.setPanName(request.getParameter("pan_Name"));
+			panVo.setPanDel(request.getParameter("pan_Del"));
 			
 			int updatePanResult = boardService.updatePan(panVo);
 			System.out.println(" 게시판관리 > panVo 수정: 성공1,실패0 : "+ updatePanResult);
-			
-			request.setAttribute("panVo", panVo);
+			request.getServletContext().setAttribute("panVo", panVo);
 		}
+
+		//게시판 목록 새로고침용 <-- 나중에 메서드로 바꿀 필요있음
+		boardService = new BoardService();
+		List<BoardPanVo> panListManu = boardService.panListManu();
+		request.getServletContext().setAttribute("panListManu", panListManu);
 		
-		
-		
-		
-		
-		request.getRequestDispatcher("/main.jsp").forward(request, response);
+		request.getRequestDispatcher("/board/boardManager.jsp").forward(request, response);
 	}
 }

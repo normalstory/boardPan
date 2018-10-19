@@ -15,7 +15,7 @@ public class BoardDao implements BoardDaoInf{
 		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
 		SqlSession session= factory.openSession();
 		
-		BoardPanVo panVo = session.selectOne(panId);
+		BoardPanVo panVo = session.selectOne("board.chackPan",panId);
 		session.close();
 		
 		return panVo;

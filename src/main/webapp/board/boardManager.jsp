@@ -38,6 +38,7 @@ select {
 			$("#pan_Name").val(boardManager);
 			boardManager = $("#addBoardParam").children(".addPan").eq(1).val();
 			$("#pan_Del").val(boardManager);
+			$("#pan_Case").val("add");
 			$("#frm").submit();
 			//console.log($("#frm").serialize());
 		});
@@ -48,6 +49,9 @@ select {
 			$("#pan_Name").val(boardManager);
 			boardManager = $(this).parent()[0].children[2].value
 			$("#pan_Del").val(boardManager);
+			$("#pan_Case").val("update");
+			boardManager = $(this).parent()[0].children[3].value
+			$("#panId").val(boardManager);
 			$("#frm").submit();
 			//console.log($("#frm").serialize());
 		});
@@ -58,9 +62,11 @@ select {
 <body>
 	<!-- parameter sender -->
 	<form id="frm" action="/boardManager" method="post">
-		<input type="hidden" name="userId" value="${S_USER.userId}">
+		<input type="hidden" name="userId" value="${S_USER.userId}">	<!-- 꼭 필요한가? 다른방식없나?-->
+		<input id="panId" type="hidden" name="panId" >
 		<input id="pan_Name" type="hidden" name="pan_Name" >
 		<input id="pan_Del" type="hidden" name="pan_Del" >
+		<input id="pan_Case" type="hidden" name="pan_Case" >
 	</form>
 	
 	<!-- header -->
@@ -103,7 +109,8 @@ select {
 										<option value="n"
 											<c:if test="${board.panDel=='n'}">selected</c:if>>안사용</option>
 								</select>
-								<button type="button" class="updateBoardPan">등록</button>
+								<input type="hidden" name="panId" value="${board.panId }" /> 
+								<button type="button" class="updateBoardPan">수정</button>
 							</li>
 						</c:forEach>
 					</ul>

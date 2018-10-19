@@ -6,17 +6,17 @@
 
 	<!-- 게시판관리 중 작성자 여부 판단 -->
 	<select id="chackPan" resultType="boardPanVo" parameterType="String">
-		select * from boardPan where PanWriter='panWriter'
+		select * from boardPan where PanId=#{panId}
 	</select>
 	
-	<!-- 게시판목록 on 메뉴area when 로그인 -->
+	<!-- 게시판목록 on 왼쪽 메뉴 (사용자) -->
 	<select id="panListManu" resultType="boardPanVo">
-		select * from boardPan where PanDel='y'
+		select * from boardPan where PanDel='y' order by panName
 	</select>
 
 	<!-- 게시판목록 on 게시판 관리page -->
 	<select id="selectUser" resultType="boardPanVo">
-		select * from boardPan
+		select * from boardPan order by PanDel desc, panName asc
 	</select>
 
 	<!-- 게시판추가 on 게시판 관리page -->
@@ -27,10 +27,10 @@
 	
 	<!-- 게시판수정 on 게시판 관리page -->
 	<update id="updatePan" parameterType="boardPanVo">
-		update set
+		update boardPan set
 		PanName=#{panName}, PanDel=#{panDel}
 		where
-		panWriter=#{panWriter}
+		PanId=#{panId}
 	</update>
 </mapper>
 
