@@ -75,9 +75,11 @@ public class BoardManager extends HttpServlet {
 			System.out.println(" 게시판관리 > panVo 수정: 성공1,실패0 : "+ updatePanResult);
 			request.getServletContext().setAttribute("panVo", panVo);
 		}
-
-		//게시판 목록 새로고침용 <-- 나중에 메서드로 바꿀 필요있음
-		boardService = new BoardService();
+		
+		
+		//게시판 목록 새로고침용					// <-- 나중에 메서드로 바꿀 필요있음
+		//doGet(request,response);
+		boardService = new BoardService();	// <-- 될줄 알았는데 안됨 : Cannot forward after response has been committed
 		List<BoardPanVo> panListManu = boardService.panListManu();
 		request.getServletContext().setAttribute("panListManu", panListManu);
 		

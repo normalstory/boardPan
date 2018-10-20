@@ -14,7 +14,7 @@ import kr.or.ddit.board.service.BoardService;
 import kr.or.ddit.board.service.BoardServiceInf;
 
 //@WebServlet("/boardManager")			//(urlPatterns={"/boardManager","/insertPan"})
-public class CopyOfBoardManager extends HttpServlet {
+public class BoardManager_bak extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

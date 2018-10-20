@@ -8,7 +8,7 @@
 		<li class="active"><a href="/boardManager">게시판 관리</a></li>	
 		
 		<c:forEach items="${panListManu }" var="board">
-			<li class="active"><a href="/게시판리스트서블릿?panId=${board.panId }">${board.panName }</a></li>
+			<li class="active"><a href="/boardPanList?page=1&pageSize=10&panId=${board.panId }">${board.panName }</a></li>
 		</c:forEach>
 	</ul>
 </div>

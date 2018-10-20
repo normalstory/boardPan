@@ -5,98 +5,103 @@ import java.util.Date;
 //게시글                    
 public class BoardTextVo {
 
-	private int TextNum ;	
-	private String PanId ;			
-	private String TextName;			
-	private String TextSub ;		
-	private String TextWriterId ;			
-	private Date TextWriteDate ;
-	private String TextDel ;		
-	private Date TextDelDate;	
-	private int SeqNum ;
-	private int TextNumP ;	
+	private int textNum ;	
+	private String panId ;			
+	private String textName;			
+	private String textSub ;		
+	private String textWriterId ;			
+	private Date textWriteDate ;
+	private String textDel ;		
+	private Date textDelDate;	
+	private int seqNum ;
+	private int textNumP ;	
 	
 	public BoardTextVo(){}
 
 	public int getTextNum() {
-		return TextNum;
+		return textNum;
 	}
 
 	public void setTextNum(int textNum) {
-		TextNum = textNum;
+		this.textNum = textNum;
 	}
 
 	public String getPanId() {
-		return PanId;
+		return panId;
 	}
 
 	public void setPanId(String panId) {
-		PanId = panId;
+		this.panId = panId;
 	}
 
 	public String getTextName() {
-		return TextName;
+		return textName;
 	}
 
 	public void setTextName(String textName) {
-		TextName = textName;
+		this.textName = textName;
 	}
 
 	public String getTextSub() {
-		return TextSub;
+		return textSub;
 	}
 
 	public void setTextSub(String textSub) {
-		TextSub = textSub;
+		this.textSub = textSub;
 	}
 
 	public String getTextWriterId() {
-		return TextWriterId;
+		return textWriterId;
 	}
 
 	public void setTextWriterId(String textWriterId) {
-		TextWriterId = textWriterId;
+		this.textWriterId = textWriterId;
 	}
 
 	public Date getTextWriteDate() {
-		return TextWriteDate;
+		return textWriteDate;
 	}
 
 	public void setTextWriteDate(Date textWriteDate) {
-		TextWriteDate = textWriteDate;
+		this.textWriteDate = textWriteDate;
 	}
 
 	public String getTextDel() {
-		return TextDel;
+		return textDel;
 	}
 
 	public void setTextDel(String textDel) {
-		TextDel = textDel;
+		this.textDel = textDel;
 	}
 
 	public Date getTextDelDate() {
-		return TextDelDate;
+		return textDelDate;
 	}
 
 	public void setTextDelDate(Date textDelDate) {
-		TextDelDate = textDelDate;
+		this.textDelDate = textDelDate;
 	}
 
 	public int getSeqNum() {
-		return SeqNum;
+		return seqNum;
 	}
 
 	public void setSeqNum(int seqNum) {
-		SeqNum = seqNum;
+		this.seqNum = seqNum;
 	}
 
 	public int getTextNumP() {
-		return TextNumP;
+		return textNumP;
 	}
 
 	public void setTextNumP(int textNumP) {
-		TextNumP = textNumP;
+		this.textNumP = textNumP;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "BoardTextVo [textNum=" + textNum + ", panId=" + panId + ", textName=" + textName + ", textSub="
+				+ textSub + ", textWriterId=" + textWriterId + ", textWriteDate=" + textWriteDate + ", textDel="
+				+ textDel + ", textDelDate=" + textDelDate + ", seqNum=" + seqNum + ", textNumP=" + textNumP + "]";
+	}
 }

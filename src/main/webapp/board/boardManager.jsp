@@ -99,6 +99,7 @@ select {
 					</ul>
 					<span>운영 게시판 목록</span>
 					<ul>
+						<%-- <c:forEach items="${panListManu }" var="board"> : 바로 반영은 되는데 'y'만 출력--%>
 						<c:forEach items="${boardList }" var="board">
 							<li class="updateBoardParam" >
 								<label>게시판 이름 :</label> 
