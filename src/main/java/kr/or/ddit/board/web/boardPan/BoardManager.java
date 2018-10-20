@@ -86,3 +86,4 @@ public class BoardManager extends HttpServlet {
 		request.getRequestDispatcher("/board/boardManager.jsp").forward(request, response);
 	}
 }
+

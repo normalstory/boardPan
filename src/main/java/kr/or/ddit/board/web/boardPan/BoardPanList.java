@@ -51,6 +51,7 @@ public class BoardPanList extends HttpServlet {
 		request.setAttribute("textVoListPage", textVoListPage);
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("panId", panId);	// <-- 편의를 위해 작성은 하는데 최선인지는 모르겠다 
+		request.setAttribute("page", page);	// <-- 편의를 위해 작성은 하는데 최선인지는 모르겠다
 		
 		request.getRequestDispatcher("/board/boardPanList.jsp").forward(request, response);
 	}

@@ -17,7 +17,13 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title>BoardPanList</title>
+<title>BoardTextList</title>
+<style type="text/css">
+.heightFix{
+	/* height: 420px; */
+	height: 29em;
+}
+</style>
 
 <!-- basicLib -->
 <%@ include file="/common/basicLib.jsp"%>
@@ -38,7 +44,7 @@
 					<div class="col-sm-8 blog-main">
 						<h2 class="sub-header">사용자</h2>
 
-						<div class="table-responsive">
+						<div class="table-responsive heightFix">
 
 							<table class="table table-striped table-hover">
 								<tr>
@@ -67,14 +73,24 @@
 						<div class="text-center">
 							<ul class="pagination">
 								<li><a href="/boardPanList?page=1&pageSize=10&panId=${panId }" aria-label="PreviousFloor"> 
-								<span aria-hidden="true">&laquo;</span></a></li>
+								<span aria-hidden="true">&#8676;</span></a></li>
+								
+								<c:if test="${page!=1}">
+								<li><a href="/boardPanList?page=${page-1}&pageSize=10&panId=${panId }" aria-label="PreviousFloor"> 
+								<span aria-hidden="true">&#8592;</span></a></li>
+								</c:if>
 								
 								<c:forEach begin="1" end="${pageNum }" var="p">
 								<li><a href="/boardPanList?page=${p}&pageSize=10&panId=${panId }">${p}</a></li>
 								</c:forEach>
-								    
+								
+								<c:if test="${page!=pageNum}">   
+								<li><a href="/boardPanList?page=${page+1}&pageSize=10&panId=${panId }" aria-label="NextFloor"> 
+								<span aria-hidden="true">&#8594;</span></a></li>
+								</c:if>
+								
 								<li><a href="/boardPanList?page=${pageNum }&pageSize=10&panId=${panId }" aria-label="NextFloor"> 
-								<span aria-hidden="true">&raquo;</span></a></li>
+								<span aria-hidden="true">&#8677;</span></a></li> 
 							</ul>
 						</div>
 					</div>
