@@ -5,10 +5,10 @@
 	<ul class="nav nav-sidebar">
 		<li class="active"><a href="/main.jsp">Main <span class="sr-only">(current)</span></a></li>
 		
-		<li class="active"><a href="/boardManager">게시판 관리</a></li>	
+		<li class="active"><a href="/boardPanManager">게시판 관리</a></li>	
 		
 		<c:forEach items="${panListManu }" var="board">
-			<li class="active"><a href="/boardPanList?page=1&pageSize=10&panId=${board.panId }">${board.panName }</a></li>
+			<li class="active"><a href="/boardTextList?page=1&pageSize=10&panId=${board.panId }&panName=${board.panName }">${board.panName }</a></li>
 		</c:forEach>
 	</ul>
 </div>

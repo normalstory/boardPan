@@ -13,8 +13,8 @@ import kr.or.ddit.board.model.BoardPanVo;
 import kr.or.ddit.board.service.BoardService;
 import kr.or.ddit.board.service.BoardServiceInf;
 
-@WebServlet("/boardManager")
-public class BoardManager extends HttpServlet {
+@WebServlet("/boardPanManager")
+public class BoardPanManager extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -26,7 +26,7 @@ public class BoardManager extends HttpServlet {
 		System.out.println("(Servlet) boardList : " + boardList);
 		
 		request.getServletContext().setAttribute("boardList", boardList);	
-		request.getRequestDispatcher("/board/boardManager.jsp").forward(request, response);
+		request.getRequestDispatcher("/board/boardPanManager.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -83,7 +83,8 @@ public class BoardManager extends HttpServlet {
 		List<BoardPanVo> panListManu = boardService.panListManu();
 		request.getServletContext().setAttribute("panListManu", panListManu);
 		
-		request.getRequestDispatcher("/board/boardManager.jsp").forward(request, response);
+		request.getRequestDispatcher("/board/boardPanManager.jsp").forward(request, response);	// <- 출력은 되는데 왼쪽 메뉴와 달리 실시간 반영이 안됨 
+		//response.sendRedirect("/board/boardPanManager.jsp");	<- 단순조회, 데이터베이스 연동 리스트는 출력안됨
 	}
 }
 

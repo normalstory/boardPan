@@ -11,18 +11,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.or.ddit.board.model.BoardPanVo;
 import kr.or.ddit.board.model.BoardTextVo;
 import kr.or.ddit.board.service.BoardService;
 import kr.or.ddit.board.service.BoardServiceInf;
 import kr.or.ddit.util.model.PageVo;
 
-@WebServlet("/boardPanList")
-public class BoardPanList extends HttpServlet {
+@WebServlet("/boardTextList")
+public class BoardTextList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println(" wellcom in the 'doGet' Method on boardPanList");
 		String panId = request.getParameter("panId");
+		String panName = request.getParameter("panName");
 		System.out.println(" > "+panId+ " 게시판으로 들어오셨습니다.");
 		
 		//게시판에 있는 text 목록 객체만들기 
@@ -50,10 +52,13 @@ public class BoardPanList extends HttpServlet {
 		
 		request.setAttribute("textVoListPage", textVoListPage);
 		request.setAttribute("pageNum", pageNum);
-		request.setAttribute("panId", panId);	// <-- 편의를 위해 작성은 하는데 최선인지는 모르겠다 
 		request.setAttribute("page", page);	// <-- 편의를 위해 작성은 하는데 최선인지는 모르겠다
 		
-		request.getRequestDispatcher("/board/boardPanList.jsp").forward(request, response);
+		BoardPanVo panVo = boardService.chackPan(panId);
+		request.setAttribute("panVo", panVo);	// 
+		
+		
+		request.getRequestDispatcher("/board/boardTextList.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

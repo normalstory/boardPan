@@ -61,7 +61,7 @@ select {
 
 <body>
 	<!-- parameter sender -->
-	<form id="frm" action="/boardManager" method="post">
+	<form id="frm" action="/boardPanManager" method="post">
 		<input type="hidden" name="userId" value="${S_USER.userId}">	<!-- 꼭 필요한가? 다른방식없나?-->
 		<input id="panId" type="hidden" name="panId" >
 		<input id="pan_Name" type="hidden" name="pan_Name" >

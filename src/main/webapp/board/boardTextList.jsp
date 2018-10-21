@@ -18,15 +18,38 @@
 <link rel="icon" href="../../favicon.ico">
 
 <title>BoardTextList</title>
-<style type="text/css">
-.heightFix{
-	/* height: 420px; */
-	height: 29em;
-}
-</style>
 
 <!-- basicLib -->
 <%@ include file="/common/basicLib.jsp"%>
+
+<!-- 사용자 클릭해서 상세화면으로 이동 -->
+<style type="text/css">
+.heightFix {
+	/* height: 420px; */
+	height: 29em;
+}
+.userClick {
+	cursor: pointer;
+}
+</style>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var ec="click"
+		$(".textClick").on(ec,function(){
+			var textNum = $(this).children()[0].innerText;
+			$("#textNum").val(textNum);
+			$("#frm").submit();
+		});
+		
+	});	
+</script>
+
+</head>
+
+<form id="frm" action="/boardTextDetail" method="get">
+	<input type="hidden" id="textNum" name="textNum">
+	<input type="hidden" id="textNum" name="panId" value="${panVo.panId }">
+</form>
 
 <body>
 
@@ -42,7 +65,7 @@
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<div class="row">
 					<div class="col-sm-8 blog-main">
-						<h2 class="sub-header">사용자</h2>
+						<h2 class="sub-header">${panVo.panName }</h2>
 
 						<div class="table-responsive heightFix">
 
@@ -56,7 +79,7 @@
 								
 								<!-- panList loop 출력 -->
 								<c:forEach items="${textVoListPage }" var="panList" >
-								<tr class="userClick" >
+								<tr class="textClick" >
 									<td>${panList.textNum }</td>
 									<td>${panList.textName }</td>
 									<td>${panList.textWriterId }</td>
@@ -68,28 +91,28 @@
 							
 						</div>
 
-						<a class="btn btn-default pull-right" href="/boardPanForm">새글 등록</a>
+						<a class="btn btn-default pull-right" href="/boardTextEditer?userId=${S_USER.userId}&panId=${panVo.panId }">새글 등록</a>
 
 						<div class="text-center">
 							<ul class="pagination">
-								<li><a href="/boardPanList?page=1&pageSize=10&panId=${panId }" aria-label="PreviousFloor"> 
+								<li><a href="/boardTextList?page=1&pageSize=10&panId=${panVo.panId }" aria-label="PreviousFloor"> 
 								<span aria-hidden="true">&#8676;</span></a></li>
 								
 								<c:if test="${page!=1}">
-								<li><a href="/boardPanList?page=${page-1}&pageSize=10&panId=${panId }" aria-label="PreviousFloor"> 
+								<li><a href="/boardTextList?page=${page-1}&pageSize=10&panId=${panVo.panId }" aria-label="PreviousFloor"> 
 								<span aria-hidden="true">&#8592;</span></a></li>
 								</c:if>
 								
 								<c:forEach begin="1" end="${pageNum }" var="p">
-								<li><a href="/boardPanList?page=${p}&pageSize=10&panId=${panId }">${p}</a></li>
+								<li><a href="/boardTextList?page=${p}&pageSize=10&panId=${panVo.panId }">${p}</a></li>
 								</c:forEach>
 								
 								<c:if test="${page!=pageNum}">   
-								<li><a href="/boardPanList?page=${page+1}&pageSize=10&panId=${panId }" aria-label="NextFloor"> 
+								<li><a href="/boardTextList?page=${page+1}&pageSize=10&panId=${panVo.panId }" aria-label="NextFloor"> 
 								<span aria-hidden="true">&#8594;</span></a></li>
 								</c:if>
 								
-								<li><a href="/boardPanList?page=${pageNum }&pageSize=10&panId=${panId }" aria-label="NextFloor"> 
+								<li><a href="/boardTextList?page=${pageNum }&pageSize=10&panId=${panVo.panId }" aria-label="NextFloor"> 
 								<span aria-hidden="true">&#8677;</span></a></li> 
 							</ul>
 						</div>

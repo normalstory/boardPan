@@ -10,7 +10,7 @@ import kr.or.ddit.board.model.BoardPanVo;
 import kr.or.ddit.board.model.BoardTextVo;
 import kr.or.ddit.util.model.PageVo;
 
-public class BoardService implements BoardServiceInf{
+public class BoardService_bak implements BoardServiceInf{
 	BoardDaoInf boardDao = new BoardDao();
 
 	//게시판관리페이지
@@ -45,6 +45,16 @@ public class BoardService implements BoardServiceInf{
 		return boardDao.textVoList(panId);
 	}
 
+//	@Override 	// <-- 일반 리스트 
+//	public List<BoardTextVo> textVoListPage(PageVo pageVo) {
+//		return boardDao.textVoListPage(pageVo);
+//	}
+
+//	@Override	// <-- 리스트 + 페이징  //페이지 별 목록의 개수 제한
+//	public List<BoardTextVo> textVoListPage(PageVo pageVo) {
+//		return boardDao.textVoListPage(pageVo);
+//	}
+
 	@Override
 	public int pageCnt(String panId) {
 		return boardDao.pageCnt(panId);
@@ -65,22 +75,25 @@ public class BoardService implements BoardServiceInf{
 	//게시판상세페이지
 	@Override
 	public BoardTextVo textVoDetail(int textNum) {
-		return boardDao.textVoDetail(textNum);
+		return null;
 	}
 
 	@Override
 	public int insertText(BoardTextVo boardTextVo) {
-		return boardDao.insertText(boardTextVo);
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public int updateText(BoardTextVo boardTextVo) {
-		return boardDao.updateText(boardTextVo);
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public int textDelUpdate(BoardTextVo boardTextVo) {
-		return boardDao.textDelUpdate(boardTextVo);
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }

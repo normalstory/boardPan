@@ -11,7 +11,7 @@ import kr.or.ddit.board.model.BoardTextVo;
 import kr.or.ddit.db.SqlFactoryBuilder;
 import kr.or.ddit.util.model.PageVo;
 
-public class BoardDao implements BoardDaoInf{
+public class BoardDao_bak implements BoardDaoInf{
 
 	//게시판관리페이지 
 	@Override
@@ -85,6 +85,19 @@ public class BoardDao implements BoardDaoInf{
 		return textVoList;
 	}
 
+//	@Override	// 일반 리스트 
+//	public List<BoardTextVo> textVoListPage(PageVo pageVo) {
+//		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
+//		SqlSession session= factory.openSession();
+//		
+//		List<BoardTextVo> textVoListPage = session.selectList("board.textVoListPage",pageVo);
+//		session.close();
+//		
+//		return textVoListPage;
+//	}
+
+	// 리스트 + (페이징 + 게시판 지정)을 위한 map 파라미터 <-- pageVo 에 변수 추가
+	//페이지 별 목록의 개수 제한
 	@Override	
 	public List<BoardTextVo> textVoListPage(PageVo pageVo) {
 		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
@@ -107,51 +120,39 @@ public class BoardDao implements BoardDaoInf{
 		return pageCnt;
 	}
 	
-	//게시글 페이지
+	//게시판상세페이지
+//	@Override
+//	public BoardTextVo textVo(int textNum) {
+//		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
+//		SqlSession session= factory.openSession();
+//		
+//		BoardTextVo textVo = session.selectOne("board.textVo",textNum);
+//		session.close();
+//		
+//		return textVo;
+//	}
+
 	@Override
 	public BoardTextVo textVoDetail(int textNum) {
-		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
-		SqlSession session= factory.openSession();
-		
-		BoardTextVo textVo = session.selectOne("board.textVoDetail",textNum);
-		session.close();
-		
-		return textVo;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public int insertText(BoardTextVo boardTextVo) {
-		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
-		SqlSession session= factory.openSession();
-		
-		int resultInsert = session.insert("board.insertText", boardTextVo);
-		session.commit();
-		session.close();
-		
-		return resultInsert;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public int updateText(BoardTextVo boardTextVo) {
-		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
-		SqlSession session= factory.openSession();
-		
-		int resultUpdate = session.insert("board.updateText", boardTextVo);
-		session.commit();
-		session.close();
-		
-		return resultUpdate;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public int textDelUpdate(BoardTextVo boardTextVo) {
-		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
-		SqlSession session= factory.openSession();
-		
-		int resultTextDelUpdate = session.update("board.textDelUpdate", boardTextVo);
-		session.commit();
-		session.close();
-		
-		return resultTextDelUpdate;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

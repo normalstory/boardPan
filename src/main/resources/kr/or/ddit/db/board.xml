@@ -33,25 +33,55 @@
 		PanId=#{panId}
 	</update>
 	
-	<!-- 게시판 목록page : '선택한' 게시판에 대한 게시글 목록 받기 -->
+	
+	<!-- 게시판 목록page : '선택한' 게시판에 대한 '게시글' 목록 받기 -->
 	<select id="textVoList" resultType="BoardTextVo" parameterType="String">
-		select * from boardText where PanId=#{panId} order by textNum desc
+		select * from boardText where PanId=#{panId} and TextDel='n' order by textNum desc
 	</select>
 	
-	<!-- 게시판 목록page : '선택한' 게시판에 대한 게시글 목록 받기 + " 페이지 별 목록의 개수 제한 " -->
+	<!-- 게시판 목록page : '선택한' 게시판에 대한 '게시글' 목록 받기 + " 페이지 별 목록의 개수 제한 " -->
 	<select id="textVoListPage" resultType="BoardTextVo" parameterType="pageVo">
 		select * from
 				(select rownum rnum, a.* from
 					(select boardText.* from boardText 
-                 	 where PanId=#{panId} order by textNum desc) a)
+                 	 where PanId=#{panId} and TextDel='n' order by textNum desc) a)
 		where rnum between #{page}*#{pageSize}-(#{pageSize}-1)
 		               and #{page}*#{pageSize}
 	</select>
 	
-	<!-- 게시판 목록page : '선택한' 게시판에 대한 게시글 목록의 '개수' for 페이지 처리   -->
+	<!-- 게시판 목록page : '선택한' 게시판에 대한 '게시글' 목록의 '개수' for 페이지 처리   -->
 	<select id="pageCnt" resultType="integer" parameterType="String">
-		select count(*) from boardText where PanId=#{panId} 
+		select count(*) from boardText where PanId=#{panId} and TextDel='n'
 	</select>
+	
+	<!-- 게시판 관리page : 게시판 아이디로 게시판 확인 -->
+	<select id="textVoDetail" resultType="boardTextVo" parameterType="int">
+		select * from boardText where TextNum=#{textNum} 
+	</select>
+	
+	<!-- 게시판 글page : 게시글 추가 -->
+	<select id="insertText" parameterType="boardTextVo">
+		insert into boardText
+		values (TextNum.nextVal+2, #{panId}, #{textName}, #{textSub}, 
+				#{textWriterId}, SYSDATE, 
+				#{textDel}, null, null, null)
+	</select>	
+	
+	<!-- 게시판 관리page : 게시글 수정 -->
+	<update id="updateText" parameterType="boardPanVo">
+		update boardText set
+		TextName=#{textName}, TextSub=#{textSub}
+		where
+		TextNum=#{textNum}
+	</update>
+	
+	<!-- 게시판 관리page : 게시글 수정 -->
+	<update id="textDelUpdate" parameterType="boardPanVo">
+		update boardText set
+		TextDel=#{textDel}
+		where
+		TextNum=#{textNum}
+	</update>
 </mapper>
 
 
