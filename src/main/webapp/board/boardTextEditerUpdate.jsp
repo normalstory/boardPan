@@ -111,7 +111,16 @@
 								</div>
 							</div>
 							
-							<div class="table-responsive">
+							<div class="form-group">
+								<br /> <br /> <label for="userNm" class="col-sm-10 control-label">첨부파일 : </label>
+								<div class="col-sm-10">
+									<c:forEach items="${addFileList }" var="addFile">
+										<label class="control-label"><a href="${addFile.addFileUrl}">${addFile.addFileName}</a></label><button>삭제</button><br /> 
+									</c:forEach>
+								</div>
+							</div>
+							
+							<!-- <div class="table-responsive">
 									<div class="form-group">
 										<label for="userNm" class="col-sm-2 control-label">첨부파일 : </label>
 										<div class="col-sm-10">
@@ -120,7 +129,7 @@
 											<label class="control-label">첨부파일 내용 출력 2</label><button>삭제</button><br />
 										</div>
 									</div>
-							</div>
+							</div> -->
 									<a class="btn btn-default pull-right" id="savebutton" >저장</a>
 							
 						</form>

@@ -108,20 +108,23 @@
 									<textarea name="smarteditor" id="smarteditor" ></textarea>
 								</div>
 							</div>
-							<div class="table-responsive">
+						</form>
+						
+							
+						<div class="table-responsive">
 								<div class="form-group">
 									<label for="userNm" class="col-sm-2 control-label">첨부파일 : </label>
 									<div class="col-sm-10">
+									<form action="/addFile" method="get">
 										<input type="file" name="uploadFile" ><br /> 
-										<%-- <c:forEach items="${addFilesList }" var="addFile">
+									</form>
+									<c:forEach items="${addFilesList }" var="addFile">
 										<label class="control-label"><a href="${addFile.addFileUrl}">${addFile.addFileName}</a></label><button>삭제</button><br /> 
-										</c:forEach> --%>
+									</c:forEach>
 									</div>
 								</div>
 						</div>
 						<a class="btn btn-default pull-right" id="savebutton" >저장</a>
-						</form>
-						
 					</div>
 				</div>
 			</div>

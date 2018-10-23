@@ -5,78 +5,77 @@ import java.util.Date;
 //댓글                      
 public class BoardReplayVo {
 	
-	private String ReplyID ;		
-	private int TextNum ;		
-	private String ReplySub	;		
-	private String ReplyerId ;			
-	private Date ReplyDate 	;
-	private String ReplyDel ;			
-	private Date ReplyDelDate ;
+	private String replyID ;		
+	private int textNum ;		
+	private String replySub	;		
+	private String replyerId ;			
+	private Date replyDate 	;
+	private String replyDel ;			
+	private Date replyDelDate ;
 	
 	public BoardReplayVo(){}
 
 	public String getReplyID() {
-		return ReplyID;
+		return replyID;
 	}
 
 	public void setReplyID(String replyID) {
-		ReplyID = replyID;
+		this.replyID = replyID;
 	}
 
 	public int getTextNum() {
-		return TextNum;
+		return textNum;
 	}
 
 	public void setTextNum(int textNum) {
-		TextNum = textNum;
+		this.textNum = textNum;
 	}
 
 	public String getReplySub() {
-		return ReplySub;
+		return replySub;
 	}
 
 	public void setReplySub(String replySub) {
-		ReplySub = replySub;
+		this.replySub = replySub;
 	}
 
 	public String getReplyerId() {
-		return ReplyerId;
+		return replyerId;
 	}
 
 	public void setReplyerId(String replyerId) {
-		ReplyerId = replyerId;
+		this.replyerId = replyerId;
 	}
 
 	public Date getReplyDate() {
-		return ReplyDate;
+		return replyDate;
 	}
 
 	public void setReplyDate(Date replyDate) {
-		ReplyDate = replyDate;
+		this.replyDate = replyDate;
 	}
 
 	public String getReplyDel() {
-		return ReplyDel;
+		return replyDel;
 	}
 
 	public void setReplyDel(String replyDel) {
-		ReplyDel = replyDel;
+		this.replyDel = replyDel;
 	}
 
 	public Date getReplyDelDate() {
-		return ReplyDelDate;
+		return replyDelDate;
 	}
 
 	public void setReplyDelDate(Date replyDelDate) {
-		ReplyDelDate = replyDelDate;
+		this.replyDelDate = replyDelDate;
 	}
 
 	@Override
 	public String toString() {
-		return "BoardReplayVo [ReplyID=" + ReplyID + ", TextNum=" + TextNum
-				+ ", ReplySub=" + ReplySub + ", ReplyerId=" + ReplyerId
-				+ ", ReplyDate=" + ReplyDate + ", ReplyDel=" + ReplyDel
-				+ ", ReplyDelDate=" + ReplyDelDate + "]";
+		return "BoardReplayVo [replyID=" + replyID + ", textNum=" + textNum + ", replySub=" + replySub + ", replyerId="
+				+ replyerId + ", replyDate=" + replyDate + ", replyDel=" + replyDel + ", replyDelDate=" + replyDelDate
+				+ "]";
 	}
-	
+
 }

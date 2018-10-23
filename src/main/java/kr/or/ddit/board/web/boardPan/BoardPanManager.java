@@ -83,8 +83,8 @@ public class BoardPanManager extends HttpServlet {
 		List<BoardPanVo> panListManu = boardService.panListManu();
 		request.getServletContext().setAttribute("panListManu", panListManu);
 		
-		request.getRequestDispatcher("/board/boardPanManager.jsp").forward(request, response);	// <- 출력은 되는데 왼쪽 메뉴와 달리 실시간 반영이 안됨 
-		//response.sendRedirect("/board/boardPanManager.jsp");	<- 단순조회, 데이터베이스 연동 리스트는 출력안됨
+		//request.getRequestDispatcher("/board/boardPanManager.jsp").forward(request, response);	// <- 출력은 되는데 왼쪽 메뉴와 달리 실시간 반영이 안됨 
+		response.sendRedirect("/boardPanManager");	//<--데이터베이스 연동 시 사용(jsp가 아닌 sevlet으로) 
 	}
 }
 

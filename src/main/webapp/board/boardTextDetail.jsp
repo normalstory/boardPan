@@ -26,13 +26,32 @@
 
 <!-- basicLib -->
 <%@ include file="/common/basicLib.jsp"%>
-
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".saveReply").on("click", function(){
+			var saveReply = $("#saveReplyParam").children(".reple").val();
+			$("#addReply").val(saveReply);
+			$("#frm").submit();
+			//console.log($("#frm").serialize());
+		});
+	});
+</script>
 </head>
 
 <body>
 	<!-- header -->
 	<%@ include file="/common/header.jsp"%>
-
+	
+	<!-- parameter sender -->
+	<form id="frm" action="/boardTextDetail" method="post">
+		<input type="hidden" name="userId" value="${S_USER.userId}">	<!-- 매번 불러오기... 최선인가? 다른 방식없나?-->
+		<!-- <input id="panId" type="hidden" name="panId" >
+		<input id="pan_Name" type="hidden" name="pan_Name" >
+		<input id="pan_Del" type="hidden" name="pan_Del" >-->
+		<input id="textNum" type="hidden" name="textNum" value="${textVo.textNum }"> 
+		<input type="hidden" name="addReply" id="addReply" >
+	</form>
+	
 	<div class="container-fluid">
 		<div class="row">
 
@@ -49,8 +68,9 @@
 							href="/boardTextEditerUpdate?textNum=${textVo.textNum}&panId=${panVo.panId }">수정</a>
 						<a class="btn btn-default pull-right" 
 							href="/boardTextDel?textNum=${textVo.textNum}&panId=${panVo.panId }">삭제</a>
-						<button type="button" class="textReply">답글</button>
-						
+						<a class="btn btn-default pull-right" 
+							href="/boardTextReplyEditer?userId=${S_USER.userId}&panId=${panVo.panId }&textNum=${textVo.textNum}">답글</a>
+							
 						<h2 class="sub-header">[${textVo.textNum }]  ${textVo.textName }</h2>
 						<div class="table-responsive">
 							<div class="form-group heightFix">
@@ -62,19 +82,24 @@
 							<div class="form-group">
 								<br /> <br /> <label for="userNm" class="col-sm-10 control-label">첨부파일 : </label>
 								<div class="col-sm-10">
-									<label class="control-label"> <a href="#">첨부파일 내용 출력 1</a> </label> <br /> 
-									<label class="control-label"> <a href="#">첨부파일 내용 출력 2</a> </label> <br />
+									<c:forEach items="${addFileList }" var="addFile">
+										<label class="control-label"><a href="${addFile.addFileUrl}">${addFile.addFileName}</a></label><br /> 
+									</c:forEach>
 								</div>
 							</div>
 						</div>
 						
-						<div class="table-responsive">
+						<div class="table-responsive">replyList
 							<div class="form-group">
-								<div class="col-sm-10">
-									<label for="userNm" >[ 댓글 ]</label><br />
-										<input type="text" name="reple"><button>댓글 저장 </button><br />
-									<label class="control-label">댓글 내용 1</label> <button>수정</button><button>삭제</button><br /> 
-									<label class="control-label">댓글 내용 2</label> <button>수정</button><button>삭제</button><br /> 
+								<div id="saveReplyParam" class="col-sm-10"><br /> 
+									<label for="userNm" >[ 댓글 ]</label> 
+									<input type="text" id="addReply" class="reple" name="reple" placeholder="댓글을 작성해주세요~">
+									<button type="button" class="saveReply">저장</button><br />
+									
+									<c:forEach items="${replyList }" var="reply">
+										<label class="control-label"> [${reply.replyerId}] ${reply.replySub} | <fmt:formatDate value="${reply.replyDate}" pattern="yyyy-MM-dd HH:MM"/> </label>
+										<button>수정</button><button>삭제</button><br /> 
+									</c:forEach> <br /> 
 								</div>
 							</div>
 						</div>

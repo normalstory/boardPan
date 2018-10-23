@@ -3,7 +3,9 @@ package kr.or.ddit.board.dao;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.board.model.BoardAddFileVo;
 import kr.or.ddit.board.model.BoardPanVo;
+import kr.or.ddit.board.model.BoardReplayVo;
 import kr.or.ddit.board.model.BoardTextVo;
 import kr.or.ddit.util.model.PageVo;
 
@@ -28,4 +30,12 @@ public interface BoardDaoInf {
 	int insertText(BoardTextVo boardTextVo);
 	int updateText(BoardTextVo boardTextVo);
 	int textDelUpdate(BoardTextVo boardTextVo);
+	
+	//첨부파일 
+	int addFile(String linkUrl);
+	List<BoardAddFileVo> addFilesList(int textNum);
+	
+	//댓글
+	int addReply(BoardReplayVo replyVo);
+	List<BoardReplayVo> replyList(BoardReplayVo replyVo);
 }

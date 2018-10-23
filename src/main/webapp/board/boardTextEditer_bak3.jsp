@@ -30,10 +30,21 @@
 <!-- 스마트 에디터 -->
 <script src="/SE2/js/HuskyEZCreator.js"></script>
 <script type="text/javascript">
+
+
+
 	var oEditors = []; // 개발되어 있는 소스에 맞추느라, 전역변수로 사용하였지만, 지역변수로 사용해도 전혀 무관 함.
 
-	$(document).ready(
-			function() {
+	$(document).ready( function() {
+		
+				//첨부파일
+				$(".addFile").on("click", function(){
+					var addFileURL = $(".addFileParam").children(".addFileURL").eq(0).val();
+					$("#uploadFile").val(addFileURL);
+					$("#frm").submit();
+				});
+		
+		
 				// Editor Setting
 				nhn.husky.EZCreator.createInIFrame({
 					oAppRef : oEditors, // 전역변수 명과 동일해야 함.
@@ -97,7 +108,7 @@
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<div class="row">
 					<div class="col-sm-8 blog-main">
-						<form role="form" action="/boardTextEditer" method="post" id="frm" enctype="multipart/form-data">
+						<form role="form" action="/boardTextEditer" method="post">
 							<input type="hidden" name="userId" value="${userId }">
 							<input type="hidden" name="panId"  value="${panVo.panId  }">
 
@@ -108,20 +119,26 @@
 									<textarea name="smarteditor" id="smarteditor" ></textarea>
 								</div>
 							</div>
-							<div class="table-responsive">
-								<div class="form-group">
-									<label for="userNm" class="col-sm-2 control-label">첨부파일 : </label>
-									<div class="col-sm-10">
-										<input type="file" name="uploadFile" ><br /> 
-										<%-- <c:forEach items="${addFilesList }" var="addFile">
-										<label class="control-label"><a href="${addFile.addFileUrl}">${addFile.addFileName}</a></label><button>삭제</button><br /> 
-										</c:forEach> --%>
-									</div>
-								</div>
-						</div>
-						<a class="btn btn-default pull-right" id="savebutton" >저장</a>
 						</form>
 						
+							
+						<div class="table-responsive">
+							<div class="form-group">
+								<label for="userNm" class="col-sm-2 control-label">첨부파일 : </label>
+								<div class="col-sm-10">
+									<form id="frm" action="/addFile" method="post" enctype="multipart/form-data">
+										<input type="file" name="uploadFile">
+										<input type="button" class="addFile" value="추가"><br /> 
+											<%-- <c:if test="${addFileCnt!=null or addFileCnt<6 }"><input type="button" class="addFile" value="추가"></c:if> --%> 
+											<%-- <input type="hidden" name="userId" value="${userId }"> <input type="hidden" name="panId"  value="${panId  }"> --%>
+									</form>
+									<c:forEach items="${uploadFile }" var="addFile">
+										<label class="control-label"><a href="${addFile.addFileUrl}">${addFile.addFileName}</a></label><button>삭제</button><br /> 
+									</c:forEach>
+								</div>
+							</div>
+						</div>
+						<a class="btn btn-default pull-right" id="savebutton" >저장</a>
 					</div>
 				</div>
 			</div>

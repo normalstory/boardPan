@@ -19,9 +19,9 @@ import kr.or.ddit.board.service.BoardService;
 import kr.or.ddit.board.service.BoardServiceInf;
 import kr.or.ddit.util.model.StringUtil;
 
-@MultipartConfig(maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5) //=(5M, 5개)
-@WebServlet(urlPatterns={"/boardTextEditer", "/boardTextReplyEditer"})
-public class BoardTextEditer extends HttpServlet {
+//@MultipartConfig(maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5) //=(5M, 5개)
+//@WebServlet(urlPatterns={"/boardTextEditer", "/boardTextReplyEditer", "/addFile"})
+public class BoardTextEditer_bak extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,9 +36,15 @@ public class BoardTextEditer extends HttpServlet {
 		//사용자 페이징 조회
 		}else if(uri.equals("/boardTextReplyEditer")){
 			boardTextReplyEditer(request, response);
+		//사용자 페이징 조회
+		}else if(uri.equals("/addFile")){
+			addFile(request, response);
 		}
 	}
 
+	private void addFile(HttpServletRequest request, HttpServletResponse response) {
+		
+	}
 
 	private void boardTextReplyEditer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//답글작성
@@ -78,7 +84,6 @@ public class BoardTextEditer extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println(" wellcom in the 'doPost' Method on boardTextEditer");
-		//게시글 저장(공통)
 		request.setCharacterEncoding("utf-8");
 		
 		String userId = request.getParameter("userId");	//효율적이 않아보이는데... 맞나? 
@@ -108,7 +113,6 @@ public class BoardTextEditer extends HttpServlet {
 		}
 		textVo.setTextName(textName);
 		System.out.println("textVo : "+textVo);
-		//저장sql 
 		int resultInsert = boardService.insertText(textVo);
 		System.out.println("게시글 추가 = 성공:1, 실패:0  = " + resultInsert);
 
@@ -128,8 +132,13 @@ public class BoardTextEditer extends HttpServlet {
 		String fileLink = saveUrl+"/"+fileName;
 		//파일 쓰기 방식-1
 		profilePart.write(fileLink);
-		profilePart.delete();	
-
+		profilePart.delete();	// 파일 업로드 과정에서 사용한 디스크 임시영역 부분을 삭제해줌
+		//파일 쓰기 방식-2 <-- 이상한 주소?가 뜨지?
+		//				String path = getServletContext().getRealPath("/uploadFile"); //url정보를 파일경로로 변경해주는 역할 수행
+		//				System.out.println("name : "+path+ File.separator + fileName);
+		//				/Users/bhuanchanwoo/workspace_JSP_201810/.metadata/.plugins/
+		//				org.eclipse.wst.server.core/tmp0/wtpwebapps/boardPan/profile/pic.png
+		//				profilePart.write(path + File.separator + fileName);
 		if(fileLink!=null) {
 			BoardAddFileVo uploadFile =  new BoardAddFileVo();
 			uploadFile.setAddFileUrl(fileLink);
@@ -137,12 +146,12 @@ public class BoardTextEditer extends HttpServlet {
 			int fileAddResult = boardService.addFile(fileLink);
 			System.out.println("게시글 추가 = 성공:1, 실패:0  = " + fileAddResult);
 			
-			//List<BoardAddFileVo> addFilesList = boardService.addFilesList(textNum);
+			//List<BoardAddFileVo> addFilesList = boardService.addFilesList();
 			//request.setAttribute("addFilesList", addFilesList);
 		}
 		
-		//request.getRequestDispatcher("/main.jsp").forward(request, response);
-		response.sendRedirect("boardTextList?page=1&pageSize=10&panId="+panId);
+		request.getRequestDispatcher("/main.jsp").forward(request, response);
+		
 		//sendRedirect 용 
 		//BoardPanVo panVo = boardService.chackPan(panId);
 		//response.sendRedirect("/board/boardTextList.jsp?page=1&pageSize=10&panName="+panName+"&panId="+panId+"\"");

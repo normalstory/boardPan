@@ -6,7 +6,9 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import kr.or.ddit.board.model.BoardAddFileVo;
 import kr.or.ddit.board.model.BoardPanVo;
+import kr.or.ddit.board.model.BoardReplayVo;
 import kr.or.ddit.board.model.BoardTextVo;
 import kr.or.ddit.db.SqlFactoryBuilder;
 import kr.or.ddit.util.model.PageVo;
@@ -154,4 +156,52 @@ public class BoardDao implements BoardDaoInf{
 		
 		return resultTextDelUpdate;
 	}
+
+	@Override
+	public int addFile(String addFileUrl) {
+		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
+		SqlSession session= factory.openSession();
+		
+		int addFileResult = session.insert("board.addFile",addFileUrl);
+		session.commit();
+		session.close();
+		
+		return addFileResult;
+	}
+
+	@Override
+	public List<BoardAddFileVo> addFilesList(int textNum) {
+		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
+		SqlSession session= factory.openSession();
+		
+		List<BoardAddFileVo> addFilesList = session.selectList("board.addFilesList",textNum);
+		session.close();
+		
+		return addFilesList;
+	}
+
+	@Override
+	public int addReply(BoardReplayVo replyVo) {
+		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
+		SqlSession session= factory.openSession();
+		
+		int addReplyResult = session.insert("board.addReply",replyVo);
+
+		session.commit();
+		session.close();
+		return addReplyResult;
+	}
+	
+	@Override
+	public List<BoardReplayVo> replyList(BoardReplayVo replyVo) {
+		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
+		SqlSession session= factory.openSession();
+		
+		List<BoardReplayVo> replyList = session.selectList("board.replyList",replyVo);
+		session.close();
+		
+		return replyList;
+	}
+
+
 }

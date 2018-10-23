@@ -1,12 +1,15 @@
 package kr.or.ddit.board.web.boardPan;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.or.ddit.board.model.BoardAddFileVo;
 import kr.or.ddit.board.model.BoardPanVo;
 import kr.or.ddit.board.model.BoardTextVo;
 import kr.or.ddit.board.service.BoardService;
@@ -30,7 +33,10 @@ public class BoardTextEditerUpdate extends HttpServlet {
 
 		BoardPanVo panVo = boardService.chackPan(panId);
 		request.setAttribute("panVo", panVo);	
-		
+
+		//첨부파일 목록
+		List<BoardAddFileVo> addFileList = boardService.addFilesList(Integer.parseInt(textNum));
+		request.setAttribute("addFileList", addFileList);
 		
 		request.getRequestDispatcher("/board/boardTextEditerUpdate.jsp").forward(request, response);
 	}

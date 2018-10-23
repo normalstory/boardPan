@@ -6,7 +6,9 @@ import java.util.Map;
 
 import kr.or.ddit.board.dao.BoardDao;
 import kr.or.ddit.board.dao.BoardDaoInf;
+import kr.or.ddit.board.model.BoardAddFileVo;
 import kr.or.ddit.board.model.BoardPanVo;
+import kr.or.ddit.board.model.BoardReplayVo;
 import kr.or.ddit.board.model.BoardTextVo;
 import kr.or.ddit.util.model.PageVo;
 
@@ -92,6 +94,30 @@ public class BoardService_bak implements BoardServiceInf{
 
 	@Override
 	public int textDelUpdate(BoardTextVo boardTextVo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int addFile(String linkUrl) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<BoardAddFileVo> addFilesList(int textNum) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<BoardReplayVo> replyList(BoardReplayVo replyVo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int addReply(BoardReplayVo replyVo) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

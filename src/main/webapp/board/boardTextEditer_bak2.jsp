@@ -21,7 +21,10 @@
 .heightFix {
 	/* height: 420px; */
 	height: 29em;
-}
+	}
+.userClick {
+	cursor: pointer;
+	}
 </style>
 
 <!-- basicLib -->
@@ -30,6 +33,27 @@
 <!-- 스마트 에디터 -->
 <script src="/SE2/js/HuskyEZCreator.js"></script>
 <script type="text/javascript">
+	//첨부파일
+	$(document).ready(function(){
+		$(".addFile").on("click", function(){
+			var addFileURL = $(".addFileParam").children(".addFileURL").eq(0).val();
+			$("#uploadFile").val(addFileURL);
+			var name = $("#uploadFile").val();
+			$(".delFileParam").append("<label>"+name+"</label><button class='delFile'>삭제</button>");
+			//$("#frm").submit();
+		});
+		 
+		$(".delFileParam").on("click",".delFile", function(){
+			var addFileUrl = $(this).parent()[0].children[1].value
+			$("#addFileUrl").val(addFileUrl);
+			addFileName = $(this).parent()[0].children[3].value
+			$("#addFileName").val(addFileName);
+			$("#frm").submit();
+		});
+	});	
+
+
+	//스마트에디터 
 	var oEditors = []; // 개발되어 있는 소스에 맞추느라, 전역변수로 사용하였지만, 지역변수로 사용해도 전혀 무관 함.
 
 	$(document).ready(
@@ -100,6 +124,9 @@
 						<form role="form" action="/boardTextEditer" method="post" id="frm" enctype="multipart/form-data">
 							<input type="hidden" name="userId" value="${userId }">
 							<input type="hidden" name="panId"  value="${panVo.panId  }">
+							<!-- <input type="hidden" id="uploadFile" name="uploadFile" > -->
+							<input type="hidden" id="addFileUrl" name="addFileUrl" >
+							<input type="hidden" id="addFileName" name="addFileName" >
 
 							${panVo.panName }게시판 &#187; <br/>
 							<h2 class="sub-header"><input type="text" name="textName" placeholder="글 제목을 작성해주세요"></h2>
@@ -108,20 +135,29 @@
 									<textarea name="smarteditor" id="smarteditor" ></textarea>
 								</div>
 							</div>
-							<div class="table-responsive">
-								<div class="form-group">
-									<label for="userNm" class="col-sm-2 control-label">첨부파일 : </label>
-									<div class="col-sm-10">
-										<input type="file" name="uploadFile" ><br /> 
-										<%-- <c:forEach items="${addFilesList }" var="addFile">
-										<label class="control-label"><a href="${addFile.addFileUrl}">${addFile.addFileName}</a></label><button>삭제</button><br /> 
-										</c:forEach> --%>
-									</div>
+		
+						<div class="table-responsive">
+							<div class="form-group">
+								<div class="addFileParam">
+									<label for="userNm" class="col-sm-2 control-label">첨부파일 : </label>								
+									<input type="file" class="addFile" id="uploadFile" name="uploadFile">
+								</div>	
+								
+								<div class="delFileParam">	
+									<%-- <c:forEach items="${addFilesList }" var="addFile"> --%>
+									
+									<%-- </c:forEach> --%>
 								</div>
+							</div>
 						</div>
-						<a class="btn btn-default pull-right" id="savebutton" >저장</a>
 						</form>
 						
+						
+						
+						
+						
+						
+						<a class="btn btn-default pull-right" id="savebutton" >저장</a>
 					</div>
 				</div>
 			</div>

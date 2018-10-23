@@ -6,7 +6,9 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import kr.or.ddit.board.model.BoardAddFileVo;
 import kr.or.ddit.board.model.BoardPanVo;
+import kr.or.ddit.board.model.BoardReplayVo;
 import kr.or.ddit.board.model.BoardTextVo;
 import kr.or.ddit.db.SqlFactoryBuilder;
 import kr.or.ddit.util.model.PageVo;
@@ -155,4 +157,29 @@ public class BoardDao_bak implements BoardDaoInf{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public int addFile(String linkUrl) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<BoardAddFileVo> addFilesList(int textNum) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<BoardReplayVo> replyList(BoardReplayVo replyVo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int addReply(BoardReplayVo replyVo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

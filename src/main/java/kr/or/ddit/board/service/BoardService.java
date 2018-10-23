@@ -6,7 +6,9 @@ import java.util.Map;
 
 import kr.or.ddit.board.dao.BoardDao;
 import kr.or.ddit.board.dao.BoardDaoInf;
+import kr.or.ddit.board.model.BoardAddFileVo;
 import kr.or.ddit.board.model.BoardPanVo;
+import kr.or.ddit.board.model.BoardReplayVo;
 import kr.or.ddit.board.model.BoardTextVo;
 import kr.or.ddit.util.model.PageVo;
 
@@ -81,6 +83,26 @@ public class BoardService implements BoardServiceInf{
 	@Override
 	public int textDelUpdate(BoardTextVo boardTextVo) {
 		return boardDao.textDelUpdate(boardTextVo);
+	}
+
+	@Override
+	public int addFile(String linkUrl) {
+		return boardDao.addFile(linkUrl);
+	}
+
+	@Override
+	public List<BoardAddFileVo> addFilesList(int textNum) {
+		return boardDao.addFilesList(textNum);
+	}
+
+	@Override
+	public List<BoardReplayVo> replyList(BoardReplayVo replyVo) {
+		return boardDao.replyList(replyVo);
+	}
+
+	@Override
+	public int addReply(BoardReplayVo replyVo) {
+		return boardDao.addReply(replyVo);
 	}
 	
 }

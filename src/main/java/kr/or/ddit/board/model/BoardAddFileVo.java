@@ -3,11 +3,20 @@ package kr.or.ddit.board.model;
 //첨부파일                  
 public class BoardAddFileVo {
 
-	private int addFileNum ;	
+	private int addFileNum ;
+	private String addFileName ;	
 	private int textNum ;	
 	private String addFileUrl ;	
 	
 	public BoardAddFileVo(){}
+
+	public String getAddFileName() {
+		return addFileName;
+	}
+
+	public void setAddFileName(String addFileName) {
+		this.addFileName = addFileName;
+	}
 
 	public int getAddFileNum() {
 		return addFileNum;
@@ -35,8 +44,9 @@ public class BoardAddFileVo {
 
 	@Override
 	public String toString() {
-		return "BoardAddFileVo [addFileNum=" + addFileNum + ", textNum="
-				+ textNum + ", addFileUrl=" + addFileUrl + "]";
+		return "BoardAddFileVo [addFileNum=" + addFileNum + ", addFileName=" + addFileName + ", textNum=" + textNum
+				+ ", addFileUrl=" + addFileUrl + "]";
 	}
+
 
 }

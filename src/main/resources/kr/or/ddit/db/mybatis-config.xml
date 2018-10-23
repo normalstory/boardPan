@@ -10,6 +10,8 @@
 		<typeAlias type="kr.or.ddit.user.model.UserVo" alias="userVo" />
 		<typeAlias type="kr.or.ddit.board.model.BoardPanVo" alias="boardPanVo" />
 		<typeAlias type="kr.or.ddit.board.model.BoardTextVo" alias="boardTextVo" />
+		<typeAlias type="kr.or.ddit.board.model.BoardAddFileVo" alias="boardAddFileVo" />
+		<typeAlias type="kr.or.ddit.board.model.BoardReplayVo" alias="boardReplayVo" />
 		<typeAlias type="kr.or.ddit.util.model.PageVo" alias="pageVo" />
 	</typeAliases>
 	

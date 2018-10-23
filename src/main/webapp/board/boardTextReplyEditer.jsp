@@ -97,31 +97,33 @@
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<div class="row">
 					<div class="col-sm-8 blog-main">
-						<form role="form" action="/boardTextEditer" method="post" id="frm" enctype="multipart/form-data">
+						<form role="form" action="/boardTextEditer" method="post" id="frm">
 							<input type="hidden" name="userId" value="${userId }">
 							<input type="hidden" name="panId"  value="${panVo.panId  }">
+							<!-- 이전에 받아온 textNum를 textNumP파라미터로 전달 -->
+							<input type="hidden" name="textNumP"  value="${textVo.textNum  }">
 
-							${panVo.panName }게시판 &#187; <br/>
-							<h2 class="sub-header"><input type="text" name="textName" placeholder="글 제목을 작성해주세요"></h2>
+							${panVo.panName }게시판 &#187; "${textVo.textName }" 글에 대한 답글 작성 중<br/>
+							<h2 class="sub-header"><input type="text" name="textName" placeholder="답글 제목을 작성해주세요"></h2>
 							<div class="table-responsive">
 								<div class="form-group">
 									<textarea name="smarteditor" id="smarteditor" ></textarea>
 								</div>
 							</div>
+							
 							<div class="table-responsive">
-								<div class="form-group">
-									<label for="userNm" class="col-sm-2 control-label">첨부파일 : </label>
-									<div class="col-sm-10">
-										<input type="file" name="uploadFile" ><br /> 
-										<%-- <c:forEach items="${addFilesList }" var="addFile">
-										<label class="control-label"><a href="${addFile.addFileUrl}">${addFile.addFileName}</a></label><button>삭제</button><br /> 
-										</c:forEach> --%>
+									<div class="form-group">
+										<label for="userNm" class="col-sm-2 control-label">첨부파일 : </label>
+										<div class="col-sm-10">
+											<input type="text" name="reple"><button>파일첨부</button><br /> 
+											<label class="control-label">첨부파일 내용 출력 1</label><button>삭제</button><br /> 
+											<label class="control-label">첨부파일 내용 출력 2</label><button>삭제</button><br />
+										</div>
 									</div>
-								</div>
-						</div>
-						<a class="btn btn-default pull-right" id="savebutton" >저장</a>
+							</div>
+									<a class="btn btn-default pull-right" id="savebutton" >저장</a>
+							
 						</form>
-						
 					</div>
 				</div>
 			</div>

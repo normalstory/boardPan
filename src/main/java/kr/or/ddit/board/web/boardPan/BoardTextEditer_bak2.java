@@ -19,9 +19,9 @@ import kr.or.ddit.board.service.BoardService;
 import kr.or.ddit.board.service.BoardServiceInf;
 import kr.or.ddit.util.model.StringUtil;
 
-@MultipartConfig(maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5) //=(5M, 5개)
-@WebServlet(urlPatterns={"/boardTextEditer", "/boardTextReplyEditer"})
-public class BoardTextEditer extends HttpServlet {
+//@MultipartConfig(maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5) //=(5M, 5개)
+//@WebServlet(urlPatterns={"/boardTextEditer", "/boardTextReplyEditer", "/addFile"})
+public class BoardTextEditer_bak2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,8 +37,11 @@ public class BoardTextEditer extends HttpServlet {
 		}else if(uri.equals("/boardTextReplyEditer")){
 			boardTextReplyEditer(request, response);
 		}
+//		//첨부파일
+//		else if(uri.equals("/addFile")){
+//			addFile(request, response);
+//		}
 	}
-
 
 	private void boardTextReplyEditer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//답글작성
@@ -77,8 +80,41 @@ public class BoardTextEditer extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		BoardServiceInf boardService = new BoardService();
+		//읽어오기
+		Part profilePart = request.getPart("uploadFile");	//<--post에서 get으로 바꿨는데 받을 수 있으려나?
+		System.out.println("원본 uploadFile  : "+request.getParameter("uploadFile"));
+		System.out.println("profilePart : "+ profilePart);
+		System.out.println("profilePart.getContentType() : "+ request.getPart("uploadFile"));
+		//파일과 관련된 부가 정보 
+		System.out.println("Content-disposition : " + profilePart.getHeader("Content-disposition"));
+		String contentDispostion = profilePart.getHeader("Content-disposition");
+		//별도 class로 리팩토링
+		String fileName = StringUtil.getFileNameFromHeader(contentDispostion);
+		String saveUrl = "/Users/bhuanchanwoo/git/boardPan/temp/uploadFile";
+		String fileLink = saveUrl+"/"+fileName;
+		//파일 쓰기 방식-1
+		profilePart.write(fileLink);
+		profilePart.delete();	
+		if(fileLink!=null) {
+			BoardAddFileVo uploadFile =  new BoardAddFileVo();
+			uploadFile.setAddFileUrl(fileLink);
+			uploadFile.setAddFileName(fileName);
+			
+			//첨부파일 저장 
+			int fileAddResult = boardService.addFile(fileLink);
+			System.out.println("첨부파일 추가 = 성공:1, 실패:0  = " + fileAddResult);
+			
+			//첨부파일 목록 출력
+			//List<BoardAddFileVo> addFilesList = boardService.addFilesList();
+			//request.getServletContext().setAttribute("addFilesList", addFilesList);
+		}
+		//response.sendRedirect("/boardTextEditer");	//<-- DB 반영 용 
+		//request.getRequestDispatcher("/main.jsp").forward(request, response);
+		
+		
+		
 		System.out.println(" wellcom in the 'doPost' Method on boardTextEditer");
-		//게시글 저장(공통)
 		request.setCharacterEncoding("utf-8");
 		
 		String userId = request.getParameter("userId");	//효율적이 않아보이는데... 맞나? 
@@ -87,7 +123,7 @@ public class BoardTextEditer extends HttpServlet {
 		String textNumP = request.getParameter("textNumP");	 
 		System.out.println("textNumP : "+textNumP);
 
-		BoardServiceInf boardService = new BoardService();
+		//BoardServiceInf boardService = new BoardService();
 		String panId = request.getParameter("panId");
 		System.out.println("panId : "+panId);
 		
@@ -108,44 +144,16 @@ public class BoardTextEditer extends HttpServlet {
 		}
 		textVo.setTextName(textName);
 		System.out.println("textVo : "+textVo);
-		//저장sql 
 		int resultInsert = boardService.insertText(textVo);
 		System.out.println("게시글 추가 = 성공:1, 실패:0  = " + resultInsert);
 
+		request.getRequestDispatcher("/main.jsp").forward(request, response);
 
-		// *** 첨부파일 
-		//읽어오기
-		Part profilePart = request.getPart("uploadFile");
-		System.out.println("원본 uploadFile  : "+request.getParameter("uploadFile"));
-		System.out.println("profilePart : "+ profilePart);
-		System.out.println("profilePart.getContentType() : "+ request.getPart("uploadFile"));
-		//파일과 관련된 부가 정보 
-		System.out.println("Content-disposition : " + profilePart.getHeader("Content-disposition"));
-		String contentDispostion = profilePart.getHeader("Content-disposition");
-		//별도 class로 리팩토링
-		String fileName = StringUtil.getFileNameFromHeader(contentDispostion);
-		String saveUrl = "/Users/bhuanchanwoo/git/boardPan/temp/uploadFile";
-		String fileLink = saveUrl+"/"+fileName;
-		//파일 쓰기 방식-1
-		profilePart.write(fileLink);
-		profilePart.delete();	
-
-		if(fileLink!=null) {
-			BoardAddFileVo uploadFile =  new BoardAddFileVo();
-			uploadFile.setAddFileUrl(fileLink);
-			uploadFile.setAddFileName(fileName);
-			int fileAddResult = boardService.addFile(fileLink);
-			System.out.println("게시글 추가 = 성공:1, 실패:0  = " + fileAddResult);
-			
-			//List<BoardAddFileVo> addFilesList = boardService.addFilesList(textNum);
-			//request.setAttribute("addFilesList", addFilesList);
-		}
-		
-		//request.getRequestDispatcher("/main.jsp").forward(request, response);
-		response.sendRedirect("boardTextList?page=1&pageSize=10&panId="+panId);
+		response.sendRedirect("/boardTextEditer");	//<-- DB 반영 용 
 		//sendRedirect 용 
 		//BoardPanVo panVo = boardService.chackPan(panId);
 		//response.sendRedirect("/board/boardTextList.jsp?page=1&pageSize=10&panName="+panName+"&panId="+panId+"\"");
 	}
+
 
 }

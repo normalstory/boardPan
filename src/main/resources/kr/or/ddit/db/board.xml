@@ -2,7 +2,8 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="board">
+  
+  <mapper namespace="board">
 
 	<!-- 왼쪽 NAV : 게시판목록 -->
 	<select id="panListManu" resultType="boardPanVo">
@@ -39,14 +40,18 @@
 		select * from boardText where PanId=#{panId} and TextDel='n' order by textNum desc
 	</select>
 	
-	<!-- 게시판 목록page : '선택한' 게시판에 대한 '게시글' 목록 받기 + " 페이지 별 목록의 개수 제한 " -->
+	<!-- 게시판 목록page : '선택한' 게시판에 대한 '게시글' 목록 받기 + " 페이지 별 목록의 개수 제한 " + " 정렬 "-->
 	<select id="textVoListPage" resultType="BoardTextVo" parameterType="pageVo">
-		select * from
+		select textnum, textname, textWriterId, textWriteDate, textnump, level  
+		from
 				(select rownum rnum, a.* from
 					(select boardText.* from boardText 
                  	 where PanId=#{panId} and TextDel='n' order by textNum desc) a)
 		where rnum between #{page}*#{pageSize}-(#{pageSize}-1)
 		               and #{page}*#{pageSize}
+		start with textnump is null 
+	    connect by prior textnum = textnump
+	    order siblings by textnum desc 
 	</select>
 	
 	<!-- 게시판 목록page : '선택한' 게시판에 대한 '게시글' 목록의 '개수' for 페이지 처리   -->
@@ -60,12 +65,15 @@
 	</select>
 	
 	<!-- 게시판 글page : 게시글 추가 -->
-	<select id="insertText" parameterType="boardTextVo">
+	<insert id="insertText" parameterType="boardTextVo">
 		insert into boardText
+		(TextNum, PanId, TextName, TextSub, TextWriterId, TextWriteDate, TextDel, TextDelDate, SeqNum 
+		<if test="textNumP != null and textNumP != 0">,TextNumP</if> )
 		values (TextNum.nextVal+2, #{panId}, #{textName}, #{textSub}, 
 				#{textWriterId}, SYSDATE, 
-				#{textDel}, null, null, null)
-	</select>	
+				#{textDel}, null, null
+				<if test="textNumP != null and textNumP != 0">,#{textNumP}</if> )
+	</insert>	
 	
 	<!-- 게시판 관리page : 게시글 수정 -->
 	<update id="updateText" parameterType="boardPanVo">
@@ -75,13 +83,33 @@
 		TextNum=#{textNum}
 	</update>
 	
-	<!-- 게시판 관리page : 게시글 수정 -->
+	<!-- 게시판 관리page : 게시글 수정(삭제 옵션) -->
 	<update id="textDelUpdate" parameterType="boardPanVo">
 		update boardText set
 		TextDel=#{textDel}
 		where
 		TextNum=#{textNum}
 	</update>
+	
+	<!-- 첨부파일 추가 -->
+	<insert id="addFile" parameterType="String">
+		insert into addFile values( AddFileNum.nextVal, TextNum.currval+2, #{addFileUrl}, #{addFileName})
+	</insert>
+	
+	<!-- 첨부파일 목록 -->
+	<select id="addFilesList" resultType="boardAddFileVo" parameterType="int">
+		select * from addFile where TextNum=#{textNum}
+	</select>
+	
+	<!-- 댓글 추가 -->
+	<insert id="addReply" parameterType="boardReplayVo">
+		insert into boardReply values(ReplyID.nextVal, #{textNum}, #{replySub}, #{replyerId}, SYSDATE, #{replyDel}, null)
+	</insert>
+	
+	<!-- 댓글 목록 -->
+	<select id="replyList" resultType="boardReplayVo" parameterType="int">
+		select * from boardReply where TextNum=#{textNum} and replyDel='n'
+	</select>
 </mapper>
 
 
