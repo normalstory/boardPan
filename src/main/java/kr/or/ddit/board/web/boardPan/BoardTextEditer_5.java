@@ -1,5 +1,6 @@
 package kr.or.ddit.board.web.boardPan;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -18,9 +19,9 @@ import kr.or.ddit.board.service.BoardService;
 import kr.or.ddit.board.service.BoardServiceInf;
 import kr.or.ddit.util.model.StringUtil;
 
-@MultipartConfig(maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5) //=(5M, 5개)
-@WebServlet(urlPatterns={"/boardTextEditer", "/boardTextReplyEditer"})
-public class BoardTextEditer extends HttpServlet {
+//@MultipartConfig(maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5) //=(5M, 5개)
+//@WebServlet(urlPatterns={"/boardTextEditer", "/boardTextReplyEditer"})
+public class BoardTextEditer_5 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -49,14 +50,12 @@ public class BoardTextEditer extends HttpServlet {
 		String textNum = request.getParameter("textNum");
 		System.out.println("textNum : "+textNum);
 		BoardTextVo textVo = boardService.textVoDetail(Integer.parseInt(textNum));
-		//System.out.println("textVo.getSeqNum() : "+textVo.getSeqNum());
 		request.setAttribute("textVo", textVo);
 		
 		String panId = request.getParameter("panId");
 		System.out.println("panId : "+panId);
 		BoardPanVo panVo = boardService.chackPan(panId);
 		request.setAttribute("panVo", panVo);	
-
 		
 		request.getRequestDispatcher("/board/boardTextReplyEditer.jsp").forward(request, response);
 	}
@@ -84,17 +83,13 @@ public class BoardTextEditer extends HttpServlet {
 		
 		String userId = request.getParameter("userId");	//효율적이 않아보이는데... 맞나? 
 		System.out.println("userId : "+userId);
-
-		String panId = request.getParameter("panId");
-		System.out.println("panId : "+panId);
 		
 		String textNumP = request.getParameter("textNumP");	 
 		System.out.println("textNumP : "+textNumP);
-		String seqNum = request.getParameter("seqNum");	 
-		System.out.println("seqNum : "+seqNum);
-		//if(textNumP.equals(SeqNum)) {}
-		
+
 		BoardServiceInf boardService = new BoardService();
+		String panId = request.getParameter("panId");
+		System.out.println("panId : "+panId);
 		
 		BoardTextVo textVo = new BoardTextVo();
 		textVo.setPanId(request.getParameter("panId"));
@@ -103,13 +98,15 @@ public class BoardTextEditer extends HttpServlet {
 		textVo.setTextWriterId(userId);
 		textVo.setTextDel("n");
 		String textName = request.getParameter("textName");
-		if(seqNum!=null) {
-			textVo.setSeqNum(Integer.parseInt(seqNum));
-		}
 		if(textNumP!=null) {
 			textVo.setTextNumP(Integer.parseInt(textNumP));
+			
+//			StringBuilder sb = new StringBuilder("&#8618;");
+//			sb.append("&nbsp;");
+//			sb.insert(0,"&nbsp;");
+//			textName = sb+textName;
+			// <-- sql로 다시 전환 
 		}
-		
 		textVo.setTextName(textName);
 		System.out.println("textVo : "+textVo);
 		//저장sql 
@@ -120,13 +117,17 @@ public class BoardTextEditer extends HttpServlet {
 		// *** 첨부파일 
 		//읽어오기
 		try {
-			Part profilePart = request.getPart("uploadFile");	
-			System.out.println("**파일속성 : "+ profilePart.getContentType());
+			Part files=request.getPart("uploadFile");
+			//for(int i=0; i<files.getSize(); i++) {
+				
+			//***배열 선언 어케?
+			
+			System.out.println("**파일속성 : "+ files.getContentType());
 			//파일과 관련된 부가 정보 
-			System.out.println("**저장 폴더명, 파일명.확장자 : " + profilePart.getHeader("Content-disposition"));
+			System.out.println("**저장 폴더명, 파일명.확장자 : " + files.getHeader("Content-disposition"));
 
 			//1
-			String contentDispostion = profilePart.getHeader("Content-disposition");
+			String contentDispostion = files.getHeader("Content-disposition");
 			String fileName = StringUtil.getFileNameFromHeader(contentDispostion);
 //			String saveUrl = "uploadFile";
 //			String fileLink = saveUrl+"/"+fileName;
@@ -147,8 +148,8 @@ public class BoardTextEditer extends HttpServlet {
 			System.out.println("fileLink : "+fileLink);
 			String saveLink = "/Users/bhuanchanwoo/git/boardPan/src/main/webapp/uploadFile/"+fileName;
 			System.out.println("saveLink : "+saveLink);
-			profilePart.write(saveLink);
-			profilePart.delete();	
+			files.write(saveLink);
+			files.delete();	
 
 			BoardAddFileVo uploadFile =  new BoardAddFileVo();
 			uploadFile.setAddFileUrl(fileLink);
@@ -160,13 +161,14 @@ public class BoardTextEditer extends HttpServlet {
 			List<BoardAddFileVo> addFilesList = boardService.addFilesList(textVo.getTextNum());
 			request.setAttribute("addFilesList", addFilesList);
 			System.out.println("addFilesList : "+addFilesList);
+			//}
 		} catch (IOException e) {
 			System.out.println("첨부된 파일이 없습니다.");
 		}
+
 		
 		//request.getRequestDispatcher("/main.jsp").forward(request, response);
 		response.sendRedirect("boardTextList?page=1&pageSize=10&panId="+panId);
-		
 		//sendRedirect 용 
 		//BoardPanVo panVo = boardService.chackPan(panId);
 		//response.sendRedirect("/board/boardTextList.jsp?page=1&pageSize=10&panName="+panName+"&panId="+panId+"\"");

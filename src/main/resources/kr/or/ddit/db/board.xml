@@ -42,7 +42,9 @@
 	
 	<!-- 게시판 목록page : '선택한' 게시판에 대한 '게시글' 목록 받기 + " 페이지 별 목록의 개수 제한 " + " 정렬 "-->
 	<select id="textVoListPage" resultType="BoardTextVo" parameterType="pageVo">
-		select textnum, textname, textWriterId, textWriteDate, textnump, level  
+		select textnum, 
+			   lpad('&#8618;　',(level-1)*3,'　')||textname text, 
+			   textWriterId, textWriteDate, textnump, level 
 		from
 				(select rownum rnum, a.* from
 					(select boardText.* from boardText 
@@ -51,7 +53,7 @@
 		               and #{page}*#{pageSize}
 		start with textnump is null 
 	    connect by prior textnum = textnump
-	    order siblings by textnum desc 
+	    order siblings by SeqNum desc, textnum asc
 	</select>
 	
 	<!-- 게시판 목록page : '선택한' 게시판에 대한 '게시글' 목록의 '개수' for 페이지 처리   -->
@@ -67,11 +69,16 @@
 	<!-- 게시판 글page : 게시글 추가 -->
 	<insert id="insertText" parameterType="boardTextVo">
 		insert into boardText
-		(TextNum, PanId, TextName, TextSub, TextWriterId, TextWriteDate, TextDel, TextDelDate, SeqNum 
+		(TextNum, PanId, TextName, TextSub, TextWriterId, TextWriteDate, TextDel, TextDelDate
+		, SeqNum 
 		<if test="textNumP != null and textNumP != 0">,TextNumP</if> )
 		values (TextNum.nextVal+2, #{panId}, #{textName}, #{textSub}, 
 				#{textWriterId}, SYSDATE, 
-				#{textDel}, null, null
+				#{textDel}, null
+				<choose>
+					<when test = "seqNum == null or textNumP == 0"> ,SeqNum.nextVal</when> 
+					<otherwise>,#{seqNum}</otherwise> 
+				</choose>
 				<if test="textNumP != null and textNumP != 0">,#{textNumP}</if> )
 	</insert>	
 	
@@ -108,8 +115,16 @@
 	
 	<!-- 댓글 목록 -->
 	<select id="replyList" resultType="boardReplayVo" parameterType="int">
-		select * from boardReply where TextNum=#{textNum} and replyDel='n'
+		select * from boardReply where TextNum=#{textNum} and replyDel='n' order by replyDate desc
 	</select>
+	
+	<!-- 게시판 관리page : 게시글 수정(삭제 옵션) -->
+	<update id="replyDel" parameterType="String">
+		update boardReply set
+		replyDel='y'
+		where
+		ReplyId=#{replyId}
+	</update>
 </mapper>
 
 

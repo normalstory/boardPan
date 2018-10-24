@@ -121,5 +121,11 @@ public class BoardService_bak implements BoardServiceInf{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public int replyDel(String replyId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }

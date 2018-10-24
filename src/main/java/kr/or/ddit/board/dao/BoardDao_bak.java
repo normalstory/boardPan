@@ -182,4 +182,10 @@ public class BoardDao_bak implements BoardDaoInf{
 		return 0;
 	}
 
+	@Override
+	public int replyDel(String replyId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

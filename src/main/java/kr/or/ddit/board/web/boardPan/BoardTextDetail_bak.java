@@ -16,40 +16,13 @@ import kr.or.ddit.board.model.BoardTextVo;
 import kr.or.ddit.board.service.BoardService;
 import kr.or.ddit.board.service.BoardServiceInf;
 
-@WebServlet(urlPatterns={"/boardTextDetail", "/boardTextReplyDel"})
-public class BoardTextDetail extends HttpServlet {
+//@WebServlet("/boardTextDetail")
+public class BoardTextDetail_bak extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println(" hello~ This is 'doGet' Method on boardTextDetail");
-		request.setCharacterEncoding("UTF-8");
-		//요청 URL로 로직 분기 
-		String uri = request.getRequestURI();
-		System.out.println("doGet() on UserServlet :"+uri);
 		
-		//사용자 전체 조회
-		if(uri.equals("/boardTextDetail")){
-			boardTextDetail(request, response);
-		//사용자 페이징 조회
-		}else if(uri.equals("/boardTextReplyDel")){
-			boardTextReplyDel(request, response);
-		}
-		
-		request.getRequestDispatcher("/board/boardTextDetail.jsp").forward(request, response);
-	}
-
-	private void boardTextReplyDel(HttpServletRequest request, HttpServletResponse response) {
-		String replyId = request.getParameter("replyId");
-		System.out.println("replyId : "+replyId);
-		
-		BoardServiceInf boardService = new BoardService();
-		int replyDelResult = boardService.replyDel(replyId);
-		System.out.println("성공:1, 실패:0 -> 결과: "+replyDelResult);
-		
-		boardTextDetail(request, response);
-	}
-
-	private void boardTextDetail(HttpServletRequest request, HttpServletResponse response) {
 		String textNum = request.getParameter("textNum");
 		System.out.println("textNum : "+textNum);
 		String panId = request.getParameter("panId");
@@ -62,17 +35,18 @@ public class BoardTextDetail extends HttpServlet {
 		//게시글
 		BoardTextVo textVo = boardService.textVoDetail(Integer.parseInt(textNum));
 		request.setAttribute("textVo", textVo);
-		//첨부파일 목록(게시글 상세 페이지 첫 로딩 시, 첨부파일 기본 정보 제공 용 )
+		//첨부파일 목록
 		List<BoardAddFileVo> addFileList = boardService.addFilesList(Integer.parseInt(textNum));
 		request.setAttribute("addFileList", addFileList);
-		System.out.println("addFileList : "+ addFileList);
-		//댓글(게시글 상세 페이지 첫 로딩 시, 첨부파일 기본 정보 제공 용 )
+		//댓글
 		BoardReplayVo replyVo = new BoardReplayVo();
 		replyVo.setReplyDel("n");
 		replyVo.setTextNum(Integer.parseInt(textNum));
 		List<BoardReplayVo> replyList = boardService.replyList(replyVo);
 		System.out.println("replyList : "+replyList);
 		request.setAttribute("replyList", replyList);
+
+		request.getRequestDispatcher("/board/boardTextDetail.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

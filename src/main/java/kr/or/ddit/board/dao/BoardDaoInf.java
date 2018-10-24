@@ -38,4 +38,5 @@ public interface BoardDaoInf {
 	//댓글
 	int addReply(BoardReplayVo replyVo);
 	List<BoardReplayVo> replyList(BoardReplayVo replyVo);
+	int replyDel(String replyId);
 }

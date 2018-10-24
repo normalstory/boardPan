@@ -8,6 +8,7 @@ public class BoardTextVo {
 	private int textNum ;	
 	private String panId ;			
 	private String textName;			
+	private String text;		
 	private String textSub ;		
 	private String textWriterId ;			
 	private Date textWriteDate ;
@@ -17,6 +18,14 @@ public class BoardTextVo {
 	private int textNumP ;	
 	
 	public BoardTextVo(){}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
 
 	public int getTextNum() {
 		return textNum;

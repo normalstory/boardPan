@@ -34,6 +34,39 @@
 
 	$(document).ready(
 			function() {
+				
+				
+				/* var list1 = new Array();
+				var list = '<c:out value="${list}"/>';
+				for (var i = 0; i < list1.length; i++) {
+				    alert(list1[i]);
+				}
+				alert("${list_map[0].name}");				 
+				
+				var list2 = new Array();
+				<c:forEach items="${map_list.email}" var="item2">
+					list2.push("${item2}");
+				</c:forEach>
+				 
+				for (var i = 0; i < list2.length; i++) {
+				    alert(list2[i]);
+				} */
+
+				var count;
+				$(document).ready(function() {
+					count=1;
+					//첨부파일 - 버튼 추가
+					$("#buttonAdd").on("click", function(){
+						if(count<6){
+							$("#addDirBt").append("<input type='file' name='uploadFile' >");
+						}else{
+							alert("최대 5개의 파일만 첨부할 수 있습니다.")
+						}
+						count++;
+					});
+				})
+				
+
 				// Editor Setting
 				nhn.husky.EZCreator.createInIFrame({
 					oAppRef : oEditors, // 전역변수 명과 동일해야 함.
@@ -64,7 +97,8 @@
 									$("#frm").submit();
 								}
 							}
-						})
+						});
+				
 			});
 
 	// 필수값 Check
@@ -109,16 +143,13 @@
 								</div>
 							</div>
 							<div class="table-responsive">
+								<a class="btn btn-default pull-left" id="buttonAdd" >첨부파일 추가</a><br>
 								<div class="form-group">
-									<label for="userNm" class="col-sm-2 control-label">첨부파일 : </label>
-									<div class="col-sm-10">
-										<input type="file" name="uploadFile" ><br /> 
-										<%-- <c:forEach items="${addFilesList }" var="addFile">
-										<label class="control-label"><a href="${addFile.addFileUrl}">${addFile.addFileName}</a></label><button>삭제</button><br /> 
-										</c:forEach> --%>
+									<div class="col-sm-10" id="addDirBt" >
+										 <input type='file' name='uploadFile' >
 									</div>
 								</div>
-						</div>
+							</div>
 						<a class="btn btn-default pull-right" id="savebutton" >저장</a>
 						</form>
 						

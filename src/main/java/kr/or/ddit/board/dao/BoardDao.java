@@ -203,5 +203,17 @@ public class BoardDao implements BoardDaoInf{
 		return replyList;
 	}
 
+	@Override
+	public int replyDel(String replyId) {
+		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
+		SqlSession session= factory.openSession();
+		
+		int replyDelResult = session.delete("board.replyDel",replyId);
+		session.commit();
+		session.close();
+		
+		return replyDelResult;
+	}
+
 
 }

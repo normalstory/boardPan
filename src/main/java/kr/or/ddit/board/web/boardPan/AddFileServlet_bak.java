@@ -14,9 +14,9 @@ import javax.servlet.http.Part;
 import kr.or.ddit.board.model.BoardAddFileVo;
 import kr.or.ddit.util.model.StringUtil;
 
-@MultipartConfig(maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5) //=(5M, 5개)
-@WebServlet("/addFile")
-public class AddFileServlet extends HttpServlet {
+//@MultipartConfig(maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5) //=(5M, 5개)
+//@WebServlet("/addFile")
+public class AddFileServlet_bak extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

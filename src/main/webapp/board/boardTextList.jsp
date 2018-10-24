@@ -81,9 +81,9 @@
 								<c:forEach items="${textVoListPage }" var="panList" >
 								<tr class="textClick" >
 									<td>${panList.textNum }</td>
-									<td>${panList.textName }</td>
+									<td>${panList.text }</td>
 									<td>${panList.textWriterId }</td>
-									<td><fmt:formatDate value="${panList.textWriteDate }" pattern="yyyy-MM-dd"/></td>
+									<td><fmt:formatDate value="${panList.textWriteDate }" pattern="yyyy-MM-dd HH:MM"/></td>
 								</tr>
 								</c:forEach>
 								

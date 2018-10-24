@@ -104,5 +104,10 @@ public class BoardService implements BoardServiceInf{
 	public int addReply(BoardReplayVo replyVo) {
 		return boardDao.addReply(replyVo);
 	}
+
+	@Override
+	public int replyDel(String replyId) {
+		return boardDao.replyDel(replyId);
+	}
 	
 }

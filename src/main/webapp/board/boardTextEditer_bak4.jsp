@@ -34,6 +34,25 @@
 
 	$(document).ready(
 			function() {
+				
+				
+				var list1 = new Array();
+				var list = '<c:out value="${list}"/>';
+				for (var i = 0; i < list1.length; i++) {
+				    alert(list1[i]);
+				}
+				alert("${list_map[0].name}");				 
+				
+				var list2 = new Array();
+				<c:forEach items="${map_list.email}" var="item2">
+					list2.push("${item2}");
+				</c:forEach>
+				 
+				for (var i = 0; i < list2.length; i++) {
+				    alert(list2[i]);
+				}
+
+
 				// Editor Setting
 				nhn.husky.EZCreator.createInIFrame({
 					oAppRef : oEditors, // 전역변수 명과 동일해야 함.
@@ -64,7 +83,8 @@
 									$("#frm").submit();
 								}
 							}
-						})
+						});
+				
 			});
 
 	// 필수값 Check
@@ -97,58 +117,28 @@
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<div class="row">
 					<div class="col-sm-8 blog-main">
-						<form role="form" action="/boardTextEditerUpdate" method="post" id="frm">
-							<input type="hidden" name="textNum" value="${textVo.textNum }">
-							<input type="hidden" name="userId" value="${textVo.textWriterId }">
-							<input type="hidden" name="panId"  value="${textVo.panId  }">
-							<input type="hidden" name="panName"  value="${panName  }">
+						<form role="form" action="/boardTextEditer" method="post" id="frm" enctype="multipart/form-data">
+							<input type="hidden" name="userId" value="${userId }">
+							<input type="hidden" name="panId"  value="${panVo.panId  }">
 
-							${panName }게시판 &#187; <br/>
-							<h2 class="sub-header"><input type="text" name="textName" value="${textVo.textName }"></h2>
+							${panVo.panName }게시판 &#187; <br/>
+							<h2 class="sub-header"><input type="text" name="textName" placeholder="글 제목을 작성해주세요"></h2>
 							<div class="table-responsive">
 								<div class="form-group">
-									<textarea name="smarteditor" id="smarteditor">${textVo.textSub }</textarea>
+									<textarea name="smarteditor" id="smarteditor" ></textarea>
 								</div>
 							</div>
-							<div class="form-group">
-								<br /> <br /> 
-								<label for="userNm" class="col-sm-10 control-label">[ 첨부파일 ] </label>
-								
-								<div class="col-sm-10">
-									<input type="file" name="uploadFile" ><br /> 
-									
-									<c:forEach items="${addFileList }" var="addFile" varStatus="i">
-											<span>첨부파일 ${i.count } : ${addFile.addFileName} - </span>  <a href="${addFile.addFileUrl}">다운로드</a>
-										<br /> 
-									</c:forEach>
-									<%-- <c:forEach items="${addFileList }" var="addFile" begin=1 end=5 step=1 varStatus="i">
-											<p>첨부파일 ${i } : </p>  <a href="${addFile.addFileUrl}">다운로드</a>
-										<br /> 
-									</c:forEach> --%>
-								</div>
-							</div>
-							<%-- <div class="form-group">
-								<br /> <br /> <label for="userNm" class="col-sm-10 control-label">첨부파일 : </label>
-								<div class="col-sm-10">
-									<c:forEach items="${addFileList }" var="addFile">
-										<label class="control-label"><a href="${addFile.addFileUrl}">${addFile.addFileName}</a></label><button>삭제</button><br /> 
-									</c:forEach>
-								</div>
-							</div>
-							 --%>
-							<!-- <div class="table-responsive">
-									<div class="form-group">
-										<label for="userNm" class="col-sm-2 control-label">첨부파일 : </label>
-										<div class="col-sm-10">
-											<input type="text" name="reple"><button>파일첨부</button><br /> 
-											<label class="control-label">첨부파일 내용 출력 1</label><button>삭제</button><br /> 
-											<label class="control-label">첨부파일 내용 출력 2</label><button>삭제</button><br />
-										</div>
+							<div class="table-responsive">
+								<div class="form-group">
+									<label for="userNm" class="col-sm-2 control-label">첨부파일 : </label>
+									<div class="col-sm-10">
+										<input type="file" name="uploadFile" ><br /> 
 									</div>
-							</div> -->
-									<a class="btn btn-default pull-right" id="savebutton" >저장</a>
-							
+								</div>
+							</div>
+						<a class="btn btn-default pull-right" id="savebutton" >저장</a>
 						</form>
+						
 					</div>
 				</div>
 			</div>

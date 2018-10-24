@@ -5,7 +5,7 @@ import java.util.Date;
 //댓글                      
 public class BoardReplayVo {
 	
-	private String replyID ;		
+	private String replyId ;		
 	private int textNum ;		
 	private String replySub	;		
 	private String replyerId ;			
@@ -15,12 +15,12 @@ public class BoardReplayVo {
 	
 	public BoardReplayVo(){}
 
-	public String getReplyID() {
-		return replyID;
+	public String getReplyId() {
+		return replyId;
 	}
 
-	public void setReplyID(String replyID) {
-		this.replyID = replyID;
+	public void setReplyId(String replyId) {
+		this.replyId = replyId;
 	}
 
 	public int getTextNum() {
@@ -73,9 +73,10 @@ public class BoardReplayVo {
 
 	@Override
 	public String toString() {
-		return "BoardReplayVo [replyID=" + replyID + ", textNum=" + textNum + ", replySub=" + replySub + ", replyerId="
+		return "BoardReplayVo [replyId=" + replyId + ", textNum=" + textNum + ", replySub=" + replySub + ", replyerId="
 				+ replyerId + ", replyDate=" + replyDate + ", replyDel=" + replyDel + ", replyDelDate=" + replyDelDate
 				+ "]";
 	}
+
 
 }

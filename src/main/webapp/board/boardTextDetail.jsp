@@ -27,6 +27,7 @@
 <!-- basicLib -->
 <%@ include file="/common/basicLib.jsp"%>
 <script type="text/javascript">
+//editReply,delReply
 	$(document).ready(function(){
 		$(".saveReply").on("click", function(){
 			var saveReply = $("#saveReplyParam").children(".reple").val();
@@ -34,6 +35,16 @@
 			$("#frm").submit();
 			//console.log($("#frm").serialize());
 		});
+	});
+
+	$("#updateButton").on("click", function(){
+		//$("#addReply").attr("+[${reply.replyerId}]+" ","${reply.replySub}");
+		//$(this).html("<input type='text' id='addReply' class='reple' name='reple' placeholder='댓글을 작성해주세요~'>");
+		var updateR = $(".updateR").html();
+		$(".updateR").remove();
+		$("#reReply").append("<input id='addeply' class='reple' name='"+updateR+"'/>");
+		$("#addeply").val(updateR);
+		//console.log($("#addReply").serialize());
 	});
 </script>
 </head>
@@ -46,8 +57,8 @@
 	<form id="frm" action="/boardTextDetail" method="post">
 		<input type="hidden" name="userId" value="${S_USER.userId}">	<!-- 매번 불러오기... 최선인가? 다른 방식없나?-->
 		<!-- <input id="panId" type="hidden" name="panId" >
-		<input id="pan_Name" type="hidden" name="pan_Name" >
-		<input id="pan_Del" type="hidden" name="pan_Del" >-->
+		<input id="pan_Name" type="hidden" name="pan_Name" >-->
+		<input id="delReply" type="hidden" name="delReply" >
 		<input id="textNum" type="hidden" name="textNum" value="${textVo.textNum }"> 
 		<input type="hidden" name="addReply" id="addReply" >
 	</form>
@@ -80,26 +91,34 @@
 							</div>
 							
 							<div class="form-group">
-								<br /> <br /> <label for="userNm" class="col-sm-10 control-label">첨부파일 : </label>
-								<div class="col-sm-10">
-									<c:forEach items="${addFileList }" var="addFile">
-										<label class="control-label"><a href="${addFile.addFileUrl}">${addFile.addFileName}</a></label><br /> 
+								<br /> <br /> 
+								<label for="userNm" class="col-sm-10 control-label">[ 첨부파일 ] </label>
+								<div class="col-sm-10 ">
+									<c:forEach items="${addFileList }" var="addFile" varStatus="i">
+											<span>첨부파일 ${i.count } : ${addFile.addFileName} - </span>  <a href="${addFile.addFileUrl}">다운로드</a>
+										<br /> 
 									</c:forEach>
+									<%-- <c:forEach items="${addFileList }" var="addFile" begin=1 end=5 step=1 varStatus="i">
+											<p>첨부파일 ${i } : </p>  <a href="${addFile.addFileUrl}">다운로드</a>
+										<br /> 
+									</c:forEach> --%>
 								</div>
 							</div>
 						</div>
 						
-						<div class="table-responsive">replyList
+						<div class="table-responsive">
 							<div class="form-group">
 								<div id="saveReplyParam" class="col-sm-10"><br /> 
 									<label for="userNm" >[ 댓글 ]</label> 
 									<input type="text" id="addReply" class="reple" name="reple" placeholder="댓글을 작성해주세요~">
-									<button type="button" class="saveReply">저장</button><br />
-									
-									<c:forEach items="${replyList }" var="reply">
-										<label class="control-label"> [${reply.replyerId}] ${reply.replySub} | <fmt:formatDate value="${reply.replyDate}" pattern="yyyy-MM-dd HH:MM"/> </label>
-										<button>수정</button><button>삭제</button><br /> 
+									<a class="btn btn-default saveReply">저장</a><br />
+									<div class="col-sm-10" id="reReply">
+									<c:forEach items="${replyList }" var="reply" >
+										<label class="control-label updateR"> [${reply.replyerId}] ${reply.replySub} | <fmt:formatDate value="${reply.replyDate}" pattern="yyyy-MM-dd HH:MM"/> </label>
+										<!-- <a class="btn btn-default" id="updateButton">수정</a> -->
+										<a class="btn btn-default savebutton" href="/boardTextReplyDel?replyId=${reply.replyId}&textNum=${textVo.textNum }&panId=${panVo.panId }">삭제</a><br /> 
 									</c:forEach> <br /> 
+									</div>
 								</div>
 							</div>
 						</div>
