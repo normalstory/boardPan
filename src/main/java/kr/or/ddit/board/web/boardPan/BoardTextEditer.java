@@ -115,54 +115,50 @@ public class BoardTextEditer extends HttpServlet {
 		//저장sql 
 		int resultInsert = boardService.insertText(textVo);
 		System.out.println("게시글만 추가 = 성공:1, 실패:0  = " + resultInsert);
-
 		
-		// *** 첨부파일 
-		//읽어오기
-		try {
-			Part profilePart = request.getPart("uploadFile");	
-			System.out.println("**파일속성 : "+ profilePart.getContentType());
-			//파일과 관련된 부가 정보 
-			System.out.println("**저장 폴더명, 파일명.확장자 : " + profilePart.getHeader("Content-disposition"));
+		// *** 다중 첨부파일 
+		int fileAddCnt = Integer.parseInt(request.getParameter("addDirBtCnt"));
+		System.out.println("fileAddCnt : "+fileAddCnt);
+		
+		for(int count =1; count<fileAddCnt+1; count++) {
+			String fileParamName = "uploadFile"+count;
+			System.out.println("fileParamName : "+fileParamName);
+			//읽어오기
+			try {
+				Part profilePart = request.getPart(fileParamName);	
+				System.out.println("**파일속성 : "+ profilePart.getContentType());
+				//파일과 관련된 부가 정보 
+				System.out.println("**저장 폴더명, 파일명.확장자 : " + profilePart.getHeader("Content-disposition"));
 
-			//1
-			String contentDispostion = profilePart.getHeader("Content-disposition");
-			String fileName = StringUtil.getFileNameFromHeader(contentDispostion);
-//			String saveUrl = "uploadFile";
-//			String fileLink = saveUrl+"/"+fileName;
-			
-			//or 2
-//			String contentDispostion = profilePart.getHeader("Content-disposition");
-//			String fileName="";
-//			String[] splits = contentDispostion.split("; ");
-//			for(String str:splits){
-//				if(str.indexOf("filename=")>=0){
-//					fileName=str.substring(10, str.lastIndexOf("\""));
-//				}
-//			}
-			System.out.println("fileName :"+ fileName);
-			
-			//파일 쓰기 방식-1
-			String fileLink = "http://"+request.getServerName()+":"+request.getServerPort()+"/uploadFile/"+fileName;
-			System.out.println("fileLink : "+fileLink);
-			String saveLink = "/Users/bhuanchanwoo/git/boardPan/src/main/webapp/uploadFile/"+fileName;
-			System.out.println("saveLink : "+saveLink);
-			profilePart.write(saveLink);
-			profilePart.delete();	
+				//1
+				String contentDispostion = profilePart.getHeader("Content-disposition");
+				String fileName = StringUtil.getFileNameFromHeader(contentDispostion);
+				System.out.println("fileName :"+ fileName);
+				
+				//파일 쓰기 방식-1
+				String fileLink = "http://"+request.getServerName()+":"+request.getServerPort()+"/uploadFile/"+fileName;
+				System.out.println("fileLink : "+fileLink);
+				String saveLink = "/Users/bhuanchanwoo/git/boardPan/src/main/webapp/uploadFile/"+fileName;
+				System.out.println("saveLink : "+saveLink);
+				profilePart.write(saveLink);
+				profilePart.delete();	
 
-			BoardAddFileVo uploadFile =  new BoardAddFileVo();
-			uploadFile.setAddFileUrl(fileLink);
-			uploadFile.setAddFileName(fileName);
-			int fileAddResult = boardService.addFile(fileLink);
-			System.out.println("첨부파일도 추가 = 성공:1, 실패:0  = " + fileAddResult);
+				BoardAddFileVo uploadFile =  new BoardAddFileVo();
+				uploadFile.setAddFileUrl(fileLink);
+				uploadFile.setAddFileName(fileName);
+				int fileAddResult = boardService.addFile(fileLink);
+				System.out.println(count+"개의 첨부 파일 추가 = 성공:1, 실패:0  = " + fileAddResult);
 
-			//서버에 전달 
-			List<BoardAddFileVo> addFilesList = boardService.addFilesList(textVo.getTextNum());
-			request.setAttribute("addFilesList", addFilesList);
-			System.out.println("addFilesList : "+addFilesList);
-		} catch (IOException e) {
-			System.out.println("첨부된 파일이 없습니다.");
+				//서버에 전달 
+				List<BoardAddFileVo> addFilesList = boardService.addFilesList(textVo.getTextNum());
+				request.setAttribute("addFilesList", addFilesList);
+				System.out.println("addFilesList : "+addFilesList);
+			} catch (IOException e) {
+				System.out.println("첨부된 파일이 없습니다.");
+			}	
 		}
+		
+		
 		
 		//request.getRequestDispatcher("/main.jsp").forward(request, response);
 		response.sendRedirect("boardTextList?page=1&pageSize=10&panId="+panId);

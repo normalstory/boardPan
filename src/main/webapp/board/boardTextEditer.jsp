@@ -58,7 +58,8 @@
 					//첨부파일 - 버튼 추가
 					$("#buttonAdd").on("click", function(){
 						if(count<6){
-							$("#addDirBt").append("<input type='file' name='uploadFile' >");
+							$("#addDirBt").append("<input type='file' name='uploadFile"+count+"'' >");
+							$("#addDirBtCnt").val(count);
 						}else{
 							alert("최대 5개의 파일만 첨부할 수 있습니다.")
 						}
@@ -145,8 +146,9 @@
 							<div class="table-responsive">
 								<a class="btn btn-default pull-left" id="buttonAdd" >첨부파일 추가</a><br>
 								<div class="form-group">
+									<input type="hidden" id="addDirBtCnt" name="addDirBtCnt" >
 									<div class="col-sm-10" id="addDirBt" >
-										 <input type='file' name='uploadFile' >
+										 
 									</div>
 								</div>
 							</div>
