@@ -7,12 +7,12 @@
 
 	<!-- 왼쪽 NAV : 게시판목록 -->
 	<select id="panListManu" resultType="boardPanVo">
-		select * from boardPan where PanDel='y' order by panName
+		select * from boardPan where PanDel='y' order by PanNum
 	</select>
 
 	<!-- 게시판 관리page : 게시판목록 -->
 	<select id="selectUser" resultType="boardPanVo">
-		select * from boardPan order by PanDel desc, panName asc
+		select * from boardPan order by PanDel desc, PanNum asc
 	</select>
 
 	<!-- 게시판 관리page : 게시판추가 -->
@@ -29,7 +29,7 @@
 	<!-- 게시판 관리page : 게시판수정 -->
 	<update id="updatePan" parameterType="boardPanVo">
 		update boardPan set
-		PanName=#{panName}, PanDel=#{panDel}
+		PanName=#{panName}, PanDel=#{panDel}, PanNum=#{panNum}
 		where
 		PanId=#{panId}
 	</update>

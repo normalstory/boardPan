@@ -42,11 +42,11 @@
 			<h2 class="form-signin-heading">Please sign in</h2>
 			
 			<label for="inputId" class="sr-only">UserId</label>
-			<input id="inputId"  type="text" name="userId"
+			<input id="inputId"  type="text" name="userId" value="jesica"
 				class="form-control" placeholder="아이디를 입력하세요"> <br />
 			
 			<label for="inputPassword" class="sr-only">Password</label>	
-			<input type="password" name="password"
+			<input type="password" name="password" value="Pass1234"
 				class="form-control" placeholder="비밀번호를 입력하세요"> <br />
 				
 			<div class="checkbox">

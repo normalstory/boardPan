@@ -36,16 +36,16 @@ public class BoardPanManager extends HttpServlet {
 		BoardServiceInf boardService = new BoardService();
 		
 		String pan_Case = request.getParameter("pan_Case");
-		String pan_Name = request.getParameter("pan_Name");
-		String userId = request.getParameter("userId");
-		String pan_Del = request.getParameter("pan_Del");
-		String panId = request.getParameter("panId");
+		//String pan_Name = request.getParameter("pan_Name");
+		//String userId = request.getParameter("userId");
+		//String pan_Del = request.getParameter("pan_Del");
+		//String panId = request.getParameter("panId");
 
-		System.out.println("Pan_Del : " + pan_Case);
-		System.out.println("Pan_Name : "+ pan_Name);
-		System.out.println("login userId : " + userId);
-		System.out.println("Pan_Del : " + pan_Del);
-		System.out.println("panId : " + panId);
+		System.out.println("pan_Case : " + pan_Case);
+		//System.out.println("Pan_Name : "+ pan_Name);
+		//System.out.println("login userId : " + userId);
+		//System.out.println("Pan_Del : " + pan_Del);
+		//System.out.println("panId : " + panId);
 		
 		
 		if(pan_Case.equals("add")){
@@ -65,15 +65,32 @@ public class BoardPanManager extends HttpServlet {
 		
 		if(pan_Case.equals("update")){
 			System.out.println("게시판 수정 ");
-			BoardPanVo panVo = boardService.chackPan(panId);
-			System.out.println("upadate panVo : "+ panVo);
 			
-			panVo.setPanName(request.getParameter("pan_Name"));
-			panVo.setPanDel(request.getParameter("pan_Del"));
 			
-			int updatePanResult = boardService.updatePan(panVo);
-			System.out.println(" 게시판관리 > panVo 수정: 성공1,실패0 : "+ updatePanResult);
-			request.getServletContext().setAttribute("panVo", panVo);
+			//다중처리 
+			String[] panIds = request.getParameterValues("pan_Id");
+			System.out.println(" 다중 게시판 출력 여부들  : " + panIds.length);
+			System.out.println(" 0번 방 게시판 id  : " + panIds[0]);
+			String[] names = request.getParameterValues("pan_Name");
+			System.out.println(" 다중 게시판 이름들  : " + names.length);
+			System.out.println(" 0번 방 게시판 이름  : " + names[0]);
+			String[] dels = request.getParameterValues("boardUse");
+			System.out.println(" 다중 게시판 출력 여부들  : " + dels.length);
+			System.out.println(" 0번 방 게시판 출력 여 : " + dels[0]);
+			
+			//for(String name : names) {
+			for(int i=0;i<names.length-1;i++) {	
+				System.out.println("panIds[i] : "+panIds[i]);
+				BoardPanVo panVo = boardService.chackPan(panIds[i]);
+				System.out.println("업데이트되는 panVo 상세 : "+ panVo);
+				panVo.setPanName(names[i]);
+				panVo.setPanDel(dels[i]);
+				panVo.setPanNum(i);
+				
+				int updatePanResult = boardService.updatePan(panVo);
+				System.out.println(i+ ". 게시판관리 > panVo 수정: 성공1,실패0 : "+ updatePanResult);
+				request.getServletContext().setAttribute("panVo", panVo);
+			}
 		}
 		
 		

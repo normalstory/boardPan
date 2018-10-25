@@ -4,7 +4,8 @@ import java.util.Date;
 
 //게시판
 public class BoardPanVo {
-	
+
+	private int panNum;	
 	private String panId;			
 	private String panName;		
 	private String panDel;			
@@ -12,6 +13,14 @@ public class BoardPanVo {
 	private Date panBirth;
 	
 	public BoardPanVo(){}
+
+	public int getPanNum() {
+		return panNum;
+	}
+
+	public void setPanNum(int panNum) {
+		this.panNum = panNum;
+	}
 
 	public String getPanId() {
 		return panId;
@@ -55,9 +64,8 @@ public class BoardPanVo {
 
 	@Override
 	public String toString() {
-		return "BoardPanVo [panId=" + panId + ", panName=" + panName
-				+ ", panDel=" + panDel + ", panWriter=" + panWriter
-				+ ", panBirth=" + panBirth + "]";
+		return "BoardPanVo [panNum=" + panNum + ", panId=" + panId + ", panName=" + panName + ", panDel=" + panDel
+				+ ", panWriter=" + panWriter + ", panBirth=" + panBirth + "]";
 	}
-	
+
 }
