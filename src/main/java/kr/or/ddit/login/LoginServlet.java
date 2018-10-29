@@ -1,8 +1,11 @@
 package kr.or.ddit.login;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import javax.rmi.CORBA.Util;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -17,6 +20,8 @@ import kr.or.ddit.encript.sha.KISA_SHA256;
 import kr.or.ddit.user.model.UserVo;
 import kr.or.ddit.user.service.UserService;
 import kr.or.ddit.user.service.UserServiceInf;
+import kr.or.ddit.util.service.UtilService;
+import kr.or.ddit.util.service.UtilServiceInf;
 
 @WebServlet("/loginServlet")
 public class LoginServlet extends HttpServlet {
@@ -60,6 +65,14 @@ public class LoginServlet extends HttpServlet {
 		BoardServiceInf boardService = new BoardService();
 		List<BoardPanVo> panListManu = boardService.panListManu();
 		req.getServletContext().setAttribute("panListManu", panListManu);
+		
+		//오늘의 날짜
+//		UtilServiceInf utilService = new UtilService();
+//		Date today = utilService.today();
+		SimpleDateFormat todayform= new SimpleDateFormat("yyyy-MM-dd");
+		String today = todayform.format(new Date());
+		System.out.println("오늘은 "+today);
+		req.getSession().setAttribute("today", today);
 		
 		//*** 암호화 
 		String encryptPass=KISA_SHA256.encrypt(password);

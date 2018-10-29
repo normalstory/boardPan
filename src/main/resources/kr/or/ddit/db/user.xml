@@ -6,7 +6,6 @@
 
 	<!-- 사용자 확인 -->
 	<select id="selectUser" parameterType="String" resultType="userVo">
-	
 		select * from jspuser where userId=#{userId}
 	</select>
 	

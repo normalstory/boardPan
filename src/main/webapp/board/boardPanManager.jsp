@@ -29,6 +29,9 @@ select {
 .userClick {
 	cursor: pointer;
 }
+.menuList{
+	background-color: #fffddd;
+}
 </style>  
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -88,7 +91,7 @@ select {
 			<div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
 				<div class="blog-post">
 					<h2 class="blog-post-title">BoardManager</h2>
-					<p>게시판을 추가하거나 활성/비활성 여부를 관리하는 페이지 입니다.</p>
+					<p>게시판을 관리하는 페이지 입니다.</p>
 					<hr>
 
 					<h3>게시판 목록</h3>
@@ -117,8 +120,10 @@ select {
 						<ul class="updateBoardParam" >
 							<c:forEach items="${boardList }" var="board" varStatus="i">
 								<li >
-									<input type="text" name="pan_Id" value="${board.panId }" />
-									<input type="text" name="pan_Name" value="${board.panName }" /> 
+									<input type="hidden" name="pan_Id" value="${board.panId }" />
+									<input type="text" name="pan_Name" value="${board.panName }" 
+									<c:if test="${board.panDel=='y'}">class="menuList"</c:if>
+									 /> 
 									<select name="boardUse">
 											<option value="y"
 												<c:if test="${board.panDel=='y'}">selected</c:if>>사용</option>

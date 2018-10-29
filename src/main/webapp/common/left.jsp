@@ -5,7 +5,8 @@
 	<ul class="nav nav-sidebar">
 		<li class="active"><a href="/main.jsp">Main <span class="sr-only">(current)</span></a></li>
 		
-		<li class="active"><a href="/boardPanManager">게시판 관리</a></li>	
+		<li class="active"><a href="/boardPanManager">게시판 메뉴관리</a></li>	
+		<li class="active"><a href="/filter/requestCounterFilter.jsp">게시판 통계관리</a></li>	
 		
 		<c:forEach items="${panListManu }" var="board">
 			<li class="active"><a href="/boardTextList?page=1&pageSize=10&panId=${board.panId }&panName=${board.panName }">${board.panName }</a></li>

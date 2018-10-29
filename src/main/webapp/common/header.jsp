@@ -16,8 +16,7 @@
 					class="icon-bar"></span>
 			</button>
 			<%-- a class="navbar-brand" href="#">JSP/SPRING	<%--= hello --%><%-- ${userVo.name}님 안녕하세요</a> --%>
-			<a class="navbar-brand" href="/main.jsp">JSP : BoardPan  
-			<c:if test="${S_USER.name!=null}"> | ${S_USER.name}님 방가방가 </c:if></a> 
+			<a class="navbar-brand" href="/main.jsp">JSP : BoardPan </a> 
 			
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
@@ -27,6 +26,7 @@
 			<form class="navbar-form navbar-right">
 				<input type="text" class="form-control" placeholder="Search...">
 			</form>
+			<a class="navbar-brand navbar-right" href="/filter/requestCounterFilter.jsp">${today } <c:if test="${S_USER.name!=null}"> | ${S_USER.name}님 방가방가~ </c:if></a> 
 		</div>
 	</div>
 </nav>

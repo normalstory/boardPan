@@ -105,7 +105,9 @@
 	
 	<!-- 첨부파일 목록 -->
 	<select id="addFilesList" resultType="boardAddFileVo" parameterType="int">
-		select * from addFile where TextNum=#{textNum}
+		select /*+ index (addFile idx_addFile_01)*/ * 
+		from addFile 
+		where TextNum=#{textNum}
 	</select>
 	
 	<!-- 댓글 추가 -->
@@ -115,7 +117,9 @@
 	
 	<!-- 댓글 목록 -->
 	<select id="replyList" resultType="boardReplayVo" parameterType="int">
-		select * from boardReply where TextNum=#{textNum} and replyDel='n' order by replyDate desc
+		select /*+ index (boardReply idx_boardReply_01)*/ * 
+		from boardReply 
+		where TextNum=#{textNum} and replyDel='n' order by replyDate desc
 	</select>
 	
 	<!-- 게시판 관리page : 게시글 수정(삭제 옵션) -->

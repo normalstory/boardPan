@@ -1,6 +1,7 @@
 <%@page import="kr.or.ddit.user.model.UserVo"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,10 +33,8 @@
 
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<div class="blog-post">
-							<h2 class="blog-post-title">BoardPan</h2>
-							<p class="blog-post-meta">2018.10.08, room 203</p>
-
-							<p>jsp를 통한 게시판 구축 실습</p>
+							<h2 class="blog-post-title">찬우의 BoardPan 만들기</h2>
+							<p>jsp를 통한 게시판구축 실습페이지</p>
 							<hr>
 
 							<h3>상세내역</h3>
@@ -58,7 +57,7 @@
 									</ul>
 								</li>
 							</ul>
-						</div>
+				</div>
 			</div>
 		</div>
 	</div>
